@@ -1,7 +1,7 @@
 
 // import './App.css'
-import Comp1 from "./components/comp1/comp1.tsx";
-import Comp2 from "./components/comp2/comp2.tsx";
+
+import Login from "./pages/Login/Login.tsx";
 
 
 function App() {
@@ -9,8 +9,7 @@ function App() {
 
   return (
     <>
-      <Comp1/>
-      <Comp2/>
+      <Login/>
     </>
   )
 }
