@@ -28,6 +28,7 @@
 }
 
 .right{
+    position: relative;
     width: 400px;
     height: 560px;
     background: rgba(255,255,2555,9);
@@ -83,4 +84,24 @@ h3{
 
 .btn:hover{
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.register{
+    position: absolute;
+    left: 66%;
+    top: 67%;
+    border: none;
+    color: #70b4e3;
+    background: rgba(0,0,0,0);
+    cursor: pointer;
+}
+
+.login{
+    position: absolute;
+    left: 74%;
+    top: 73%;
+    border: none;
+    color: #70b4e3;
+    background: rgba(0,0,0,0);
+    cursor: pointer;
 }

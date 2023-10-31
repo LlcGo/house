@@ -1,11 +1,12 @@
 import axios from "axios";
 
- const myAxios = axios.create({
+const myAxios = axios.create({
     baseURL: 'https://some-domain.com/api/',
-    timeout: 1000,
-    headers: {'X-Custom-Header': 'foobar'}
+    timeout: 10000,
 });
 
+ //允许跨域
+myAxios.defaults.withCredentials = true;
 // 添加请求拦截器
 myAxios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么

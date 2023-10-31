@@ -1,0 +1,19 @@
+.box{
+  background-color: red;
+}
+
+.header{
+    background-color: yellow;
+    padding: 0px;
+}
+
+.sider{
+    background-color: blueviolet;
+}
+
+
+
+.footer{
+    padding: 0px;
+    background-color: lawngreen;
+}
