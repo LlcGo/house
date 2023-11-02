@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Space, Table, Tag} from 'antd';
+import {Button, Card, Form, Space, Table, Tag} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
 interface DataType {
@@ -89,18 +89,15 @@ const data: DataType[] = [
     },
 ];
 
-const style: React.CSSProperties = {
-    height: '92vh',
-    width: '100%'
-};
+
 
 const Home: React.FC = () =>{
     return (
-        <div  style={style}>
-            <Form>
-                <Table columns={columns} dataSource={data} />
-            </Form>
-        </div>
+        <>
+            <Card>
+                    <Table columns={columns} dataSource={data} />
+            </Card>
+        </>
         )
 }
 

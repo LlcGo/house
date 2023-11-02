@@ -1,6 +1,7 @@
 import styles from '../css/Login.module.css'
 import {useNavigate} from "react-router-dom";
 import {useRef} from "react";
+import {UserLogin} from "../../../service/api/userAPI.ts";
 
 const Login = () => {
     const nameRef = useRef<HTMLInputElement>(null);
@@ -12,10 +13,19 @@ const Login = () => {
        navigate('/register')
     }
 
-    const login = () => {
-        console.log('1--->' +nameRef?.current?.value)
-        console.log('2--->' +accountRef?.current?.value)
-        console.log('3--->' +passwordRef?.current?.value)
+    const login = async () => {
+        console.log('1--->' + nameRef?.current?.value)
+        console.log('2--->' + accountRef?.current?.value)
+        console.log('3--->' + passwordRef?.current?.value)
+        const  res =  await UserLogin({
+            name:nameRef?.current?.value,
+            password :passwordRef?.current?.value}
+        );
+        console.log('接收的数据' + JSON.stringify(res.data))
+        if(res.data === '登录成功'){
+            navigate('/user/home')
+            return;
+        }
     }
 
 

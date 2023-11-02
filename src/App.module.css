@@ -1,19 +1,25 @@
-.box{
-  background-color: red;
+.box {
+    background-color: red;
+    width: 100%;
+    height: 100%;
 }
 
-.header{
+.header {
     background-color: yellow;
     padding: 0px;
 }
 
-.sider{
+.sider {
     background-color: blueviolet;
 }
 
 
-
-.footer{
+.footer {
     padding: 0px;
     background-color: lawngreen;
+}
+
+.content {
+    width: 95%;
+    margin: 10px auto;
 }

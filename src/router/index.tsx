@@ -1,18 +1,28 @@
-
 import Login from "../pages/user/login/Login.tsx";
-import Register from "../pages/user/register/Register.tsx";
-import {useRoutes} from "react-router-dom";
-import Home from "../pages/home/Home.tsx";
+// import Register from "../pages/user/register/Register.tsx";
+// import Home from "../pages/home/Home.tsx";
+import {Navigate} from "react-router-dom";
+import React, {JSX, lazy} from "react";
+import Test from "../pages/test/Test.tsx";
+
+const Register = lazy(() => import("../pages/user/register/Register.tsx"))
+const Home = lazy(() => import("../pages/home/Home.tsx"))
+
+const withLoadingComponent = (comp: JSX.Element) => (
+    <React.Suspense fallback={<>Loading...</>}>
+        {comp}
+    </React.Suspense>
+)
 
 
 const routes = [
-    { path: "/login", element : <Login />},
-    { path: "/register", element: <Register />},
-    { path: "/user/home" , element:  <Home/>},
+    {path: "/login", element: <Login/>},
+    {path: "/", element: <Navigate to={"/login"}/>},
+    {path: "/register", element: withLoadingComponent(<Register/>) },
+    {path: "/user/home", element: withLoadingComponent(<Home/>)} ,
+    {path: "/test", element: <Test/>}
 ]
 
-const DynamicRouter = () => {
-    return useRoutes(routes);
-}
+export default routes;
 
-export default DynamicRouter;
+
