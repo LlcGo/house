@@ -1,0 +1,44 @@
+
+.header{
+    position: relative;
+    display: flex;
+    color: #fff;
+    height: 100%;
+    line-height: 64px;
+    background-color:  #7dbcea;
+    width: 100%;
+}
+
+.imgLogo{
+    position: absolute;
+    display: flex;
+    background-image: url("@/assets/img/logo.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotateY(180deg);
+    left: 85%;
+    top: 15px;
+    height: 60px;
+    width:  60px;
+    border-radius: 50%;;
+    animation: rotate 3s linear infinite;
+}
+
+
+@keyframes rotate{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);/*360度结束*/
+    }
+}
+
+
+.userAvatar{
+    position: absolute;
+    height: 30%;
+    left: 40%;
+}
+
+

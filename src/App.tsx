@@ -6,6 +6,7 @@ import {Content, Header} from "antd/es/layout/layout";
 import MyHeader from "./components/Header";
 import style from './App.module.css'
 import routes from "./router";
+import React from "react";
 
 const App = () => {
     const path = new URL(window.location.href);
@@ -16,6 +17,9 @@ const App = () => {
                 path.pathname.startsWith('/user') ? <Layout className={style.box}>
                     {/*左边*/}
                     <Sider className={style.sider}>
+                        <div className={style.imgCss} >
+                            <div className={style.img}></div>
+                        </div>
                         <MySider/>
                     </Sider>
                     <Layout>

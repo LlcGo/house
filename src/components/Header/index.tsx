@@ -1,17 +1,15 @@
-const headerStyle: React.CSSProperties = {
-    textAlign: 'center',
-    color: '#fff',
-    height: 64,
-    paddingInline: 50,
-    lineHeight: '64px',
-    backgroundColor: '#7dbcea',
-    width: '100%'
-};
+import style from './headerStyle.module.css'
+import UserAvatar from "./UserAvatar.tsx";
+
 const MyHeader = () => {
     return (
-        <div style={headerStyle}>
-            头部
+        <div className={style.header}>
+            <div className={style.imgLogo}></div>
+            <div className={style.userAvatar}>
+                <UserAvatar />
+            </div>
         </div>
+
     )
 }
 
