@@ -1,14 +1,24 @@
 
 import style from './comp1.module.scss'
 import {Button} from "antd";
-import {FastForwardOutlined} from "@ant-design/icons";
+import {useDispatch, useSelector} from "react-redux";
+
 
 const Comp1 = () => {
+    const { bookName,useDate } = useSelector((state:RootState) => state.book)
+    const dispatch = useDispatch();
+    const change = () => {
+        dispatch({
+           type:"add2",
+           val: 10
+        })
+    }
     return(
-      <div className={style.box}>
-          组件1
-          <Button type={"primary"}>按钮</Button>
-          <FastForwardOutlined />
+      <div >
+          测试reducer
+          <br/>
+          {useDate}
+          <Button type={"primary"} onClick={change}>按钮</Button>
       </div>
     )
 }

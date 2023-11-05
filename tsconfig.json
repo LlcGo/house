@@ -22,7 +22,8 @@
     "baseUrl": "./",
     "@/*": [
       "src/*"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
