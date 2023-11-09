@@ -7,7 +7,7 @@ const footerStyle: React.CSSProperties = {
     height : '100%',
 };
 
-const MyFooter = () => {
+const BackFooter = () => {
     return (
         <div style={footerStyle}>
             底部
@@ -15,4 +15,4 @@ const MyFooter = () => {
     )
 }
 
-export default MyFooter;
+export default BackFooter;

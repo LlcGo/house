@@ -1,7 +1,7 @@
 import style from './headerStyle.module.css'
 import UserAvatar from "./UserAvatar.tsx";
 
-const MyHeader = () => {
+const BackHeader = () => {
     return (
         <div className={style.header}>
             <div className={style.imgLogo}></div>
@@ -13,4 +13,4 @@ const MyHeader = () => {
     )
 }
 
-export default MyHeader;
+export default BackHeader;

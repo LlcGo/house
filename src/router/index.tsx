@@ -5,6 +5,7 @@ import {Navigate} from "react-router-dom";
 import React, {JSX, lazy} from "react";
 import Test from "../pages/test/Test.tsx";
 import Comp1 from "../components/comp1/comp1.tsx";
+import FrontIndex from "../pages/front/index/FrontIndex.tsx";
 
 const Register = lazy(() => import("../pages/user/register/Register.tsx"))
 const Home = lazy(() => import("../pages/home/Home.tsx"))
@@ -16,12 +17,15 @@ const withLoadingComponent = (comp: JSX.Element) => (
 )
 
 const routes = [
-    {path: "/login", element: <Login/>},
-    {path: "/", element: <Navigate to={"/login"}/>},
-    {path: "/register", element: withLoadingComponent(<Register/>) },
+    // {path: "/login", element: <Login/>},
+    // {path: "/", element: <Navigate to={"/login"}/>},
+    // {path: "/register", element: withLoadingComponent(<Register/>) },
+    // {path: "/test", element: <Test/>},
+    // {path: "/testReducer", element: <Comp1/>}
+    {path: "/", element: <Navigate to={"/front/index"}/>},
+    {path: "/front/index", element: <FrontIndex/>},
     {path: "/user/home", element: withLoadingComponent(<Home/>)} ,
-    {path: "/test", element: <Test/>},
-    {path: "/testReducer", element: <Comp1/>}
+
 ];
 
 export default routes;
