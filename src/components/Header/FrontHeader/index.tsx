@@ -1,11 +1,15 @@
 import style from './headerStyle.module.css'
-import UserAvatar from "./UserAvatar.tsx";
+import fLogo from '../../../assets/img/frontLogo.jpg'
+import {Button} from "antd";
+import UserDrawer from "../../FrontComponents/login/UserDrawer.tsx";
+import UserRDrawer from "../../FrontComponents/register/UserRDrawer.tsx";
 
 const FrontHeader = () => {
     return (
         <div className={style.box}>
-            <div className={style.logo}>
-                坤坤租房
+            <div className={style.left}>
+                <img className={style.log} src={fLogo}/>
+                <p className={style.imgTitle}>坤坤租房</p>
             </div>
 
             <div className={style.title1}>
@@ -26,8 +30,11 @@ const FrontHeader = () => {
 
 
             <div className={style.login}>
-                <p>登录</p>
-                <p>注册</p>
+                <UserRDrawer/>
+                <div style={{marginLeft:'20px'}}>
+                    <UserDrawer/>
+                </div>
+
             </div>
 
         </div>
