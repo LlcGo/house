@@ -2,31 +2,40 @@ import style from "../../pages/front/index/FrontIndex.module.css";
 import fimg from "../../assets/img/fimg.jpg";
 import {Button} from "antd";
 import React from "react";
+import {house} from "../../pages/front/index/FrontIndex.tsx";
 
-const Descriptions = () => {
+const Descriptions = (props:any) => {
+    // debugger
+    let{list} = props
+
+    const imgUrl = list?.thumbnailUrl.replace("/src/main/resources/static","")
+ // debugger
     return(
+
         <div className={style.informationBox}>
+            {/*<div>{list  ? list.title : '空'}</div>*/}
+            {list ?
             <div className={style.information}>
-                <img className={style.img} src={fimg}/>
+                <img className={style.img} src={"http://localhost:8088" + imgUrl}/>
                 <div className={style.detilTitleBox}>
-                    <p className={style.infoP1}>富力湾 4室2厅4卫 30000元月 豪华装修</p>
-                    <p className={style.infoP2}>顺安南路12号</p>
+                    <p className={style.infoP1}>{ list?.title }</p>
+                    <p className={style.infoP2}>{list?.address}</p>
                     <div>
-                        <p className={style.infoP3}>￥30000 <p className={style.infoY}>/月</p></p>
+                        <p className={style.infoP3}>￥{list?.monthRent}<p className={style.infoY}>/月</p></p>
                     </div>
 
                 </div>
                 <div className={style.infoBottom}>
                     <div className={style.infoBottomBox}>
                         <div className={style.infoBottomP}>
-                            <p>4卧室</p>
-                            <p>4卫生间</p>
+                            <p>{list?.bedroomNum}卧室</p>
+                            <p>{list?.livingRoomNum}卫生间</p>
                         </div>
                         <Button type="dashed" className={style.infoBottomButton}>收藏</Button>
                     </div>
 
                 </div>
-            </div>
+            </div> : <div>暂无数据</div>}
         </div>
     )
 }

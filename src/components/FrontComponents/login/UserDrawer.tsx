@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import {Button, Drawer, Form,Input} from 'antd';
 import style from './UserDrawerStyle.module.less'
-const UserDrawer = () => {
+import {User, UserLogin} from "../../../service/api/userAPI.ts";
+import {useDispatch, useSelector} from "react-redux";
+const UserDrawer = (props:any) => {
     const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
 
-    type FieldType = {
-        username?: string;
-        password?: string;
-    };
-
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = async (values: User) => {
+       const res =  await UserLogin(values)
+        console.log('Success ------->', res);
+        if(res){
+            props.setUser(res)
+        }
+        window.localStorage.setItem('user',JSON.stringify(res))
+       // alert(username)
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -27,12 +31,12 @@ const UserDrawer = () => {
 
     return (
         <>
+            {/*<div>{username}</div>*/}
             <div className={style.UserDrawerButton}>
                 <Button  type="dashed" onClick={showDrawer}>
                     登录
                 </Button>
             </div>
-
             <Drawer className={style.drawer}  title="登录" placement="right" onClose={onClose} open={open}>
                 <Form
                     name="basic"
@@ -45,7 +49,7 @@ const UserDrawer = () => {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
-                    <Form.Item<FieldType>
+                    <Form.Item<User>
                         label="用户名"
                         name="username"
                         rules={[{ required: true, message: '请输入用户名!' }]}
@@ -53,9 +57,9 @@ const UserDrawer = () => {
                         <Input />
                     </Form.Item>
 
-                    <Form.Item<FieldType>
+                    <Form.Item<User>
                         label="密码"
-                        name="password"
+                        name="userPass"
                         rules={[{ required: true, message: '请输入密码!' }]}
                     >
                         <Input.Password />

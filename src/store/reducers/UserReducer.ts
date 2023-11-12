@@ -1,15 +1,18 @@
+import {User} from "../../service/api/userAPI.ts";
+
+
 let initialState = {
-    userName: 'xw',
-    age: 16
+    username: '',
 }
 
-const UserReducer = (state = initialState, action: any) => {
+const UserReducer = (state : User = initialState, action: any) => {
     let {type, payload} = action;
     switch (type) {
-        case "add" :
+        case "addUser" :
             return {...state ,...payload}
-        case "dec" :
-            return {...state ,...payload}
+        case "removeUser" :
+            initialState.username = '';
+            return 'success'
         default:
     }
     return state

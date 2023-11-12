@@ -3,8 +3,17 @@ import fLogo from '../../../assets/img/frontLogo.jpg'
 import {Button} from "antd";
 import UserDrawer from "../../FrontComponents/login/UserDrawer.tsx";
 import UserRDrawer from "../../FrontComponents/register/UserRDrawer.tsx";
+import {useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import * as constants from "constants";
+import {User} from "../../../service/api/userAPI.ts";
+import FrontUserAvatar from "./UserAvatar.tsx";
 
 const FrontHeader = () => {
+    // const {username} = useSelector((state: any) => state.user);
+    const user : User = JSON.parse(window.localStorage.getItem('user')!)
+    const [User,setUser] = useState<User>();
+
     return (
         <div className={style.box}>
             <div className={style.left}>
@@ -28,15 +37,17 @@ const FrontHeader = () => {
                 </div>
             </div>
 
-
-            <div className={style.login}>
-                <UserRDrawer/>
-                <div style={{marginLeft:'20px'}}>
-                    <UserDrawer/>
-                </div>
-
-            </div>
-
+                    <div className={style.login}>
+                        {
+                            user ?    <FrontUserAvatar setUser={setUser} />
+                                : <>
+                                    <UserRDrawer/>
+                                    <div style={{marginLeft:'20px'}}>
+                                        <UserDrawer setUser={setUser}/>
+                                    </div>
+                                </>
+                        }
+                    </div>
         </div>
     )
 }
