@@ -8,6 +8,8 @@ import Comp1 from "../components/comp1/comp1.tsx";
 import FrontIndex from "../pages/front/index/FrontIndex.tsx";
 import UserCenter from "../pages/front/userCenter";
 import UserProfile from "../pages/front/userCenter/userProfile";
+import WholeHouse from "../pages/front/WholeHouse";
+import FeedBack from "../pages/front/FeedBack";
 
 const Register = lazy(() => import("../pages/user/register/Register.tsx"))
 const Home = lazy(() => import("../pages/home/Home.tsx"))
@@ -38,7 +40,10 @@ const routes = [
     //     // },
     // ]
     },
+    {path: "/front/user/house", element: withLoadingComponent(<WholeHouse/>)} ,
+    {path: "/front/feedBack", element: withLoadingComponent(<FeedBack/>)} ,
     {path: "/user/home", element: withLoadingComponent(<Home/>)} ,
+
 
 ];
 

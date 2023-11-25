@@ -1,14 +1,14 @@
 import style from "../../pages/front/index/FrontIndex.module.css";
-import fimg from "../../assets/img/fimg.jpg";
+
 import {Button} from "antd";
 import React from "react";
-import {house} from "../../pages/front/index/FrontIndex.tsx";
+
 
 const Descriptions = (props:any) => {
     // debugger
     let{list} = props
 
-    const imgUrl = list?.thumbnailUrl.replace("/src/main/resources/static","")
+    const imgUrl = list?.thumbnailUrl?.replace("/src/main/resources/static","")
  // debugger
     return(
 

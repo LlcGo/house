@@ -11,7 +11,6 @@ const UserProfile = () => {
 
     useEffect(()=>{
         form.setFieldsValue(user)
-
     },[user])
 
     return(

@@ -6,6 +6,10 @@ import {BrowserRouter, useParams, useRoutes} from "react-router-dom";
 import routes from "../../../router";
 import UserProfile from "./userProfile";
 import UserOrder from "./UserOrder";
+import UserupdatePassword from "./UserupdatePassword";
+import UserFeedback from "./UserFeedback";
+import MyHouse from "./MyHouse";
+import MyMark from "./MyMark";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -81,22 +85,22 @@ const UserCenter = () => {
                 }
                 {
                     type === 3 && <div>
-                        我的家
+                        <MyHouse/>
                     </div>
                 }
                 {
                     type === 4 && <div>
-                        我的收藏
+                       <MyMark/>
                     </div>
                 }
                 {
                     type === 5 && <div>
-                        密码修改
+                        <UserupdatePassword/>
                     </div>
                 }
                 {
                     type === 6 && <div>
-                        我的反馈
+                        <UserFeedback/>
                     </div>
                 }
             </div>

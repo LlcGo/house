@@ -3,8 +3,7 @@ import {Button, Carousel} from 'antd';
 import style from './FrontIndex.module.css'
 import Descriptions from "../../../components/FrontComponents/Descriptions.tsx";
 import zw from '../../../assets/img/shouye.jpg'
-import {getIndexModel} from "../../../service/api/userAPI.ts";
-import {flushSync} from "react-dom";
+import {getIndexModel, house} from "../../../service/api/userAPI.ts";
 // const contentStyle: React.CSSProperties = {
 //     margin: 0,
 //     height: '600px',
@@ -12,41 +11,7 @@ import {flushSync} from "react-dom";
 //     textAlign: 'center',
 //     background: '#364d79',
 // };
-export interface house{
-    address : string
-    area: number
-    bedroomNum: number
-    buildYear: string
-    cetificateNo: string
-    city: string
-    contactName: string
-    contactPhone:string
-    content: string
-    createTime: string
-    direction: string
-    floor: number
-    hasAirConditioner: number
-    hasElevator?: null
-    id: number
-    kichenNum :number
-    lastOrderEndTime?: null
-    lastOrderStartTime?: null
-    livingRoomNum: number
-    longitudeLatitude: string
-    maxFloor : number
-    monthRent :number
-    rentType: "whole"
-    shareHouseList: null
-    slideImgList: null
-    slideUrl: []
-        //"[\"/src/main/resources/static/assets/img/uploads/87ca276c-63aa-450c-9e17-34cf653c4e1d.jpg\",\"/src/main/resources/static/assets/img/uploads/c7f32cbb-27bd-4e87-b7b2-8b57647a2ba7.jpg\",\"/src/main/resources/static/assets/img/uploads/5619bbf4-26e7-4459-82de-8feba362e2cf.jpg\",\"/src/main/resources/static/assets/img/uploads/d117f50d-27a5-419f-9041-c8033ba56c63.jpg\",\"/src/main/resources/static/assets/img/uploads/df82f73b-bd7a-41a1-93ae-c6db2864a65e.jpg\",\"/src/main/resources/static/assets/img/uploads/c838d4bd-04c5-421e-b32e-38e549bfa1b7.jpg\"]"
-    status: 0
-    thumbnailUrl: string
-    // "/src/main/resources/static/assets/img/uploads/87ca276c-63aa-450c-9e17-34cf653c4e1d.jpg"
-    title: string
-    toiletNum: number
-    userId: number
-}
+
 const FrontIndex = () =>{
 
     const [topList,setTopList] = useState<house[]>([])

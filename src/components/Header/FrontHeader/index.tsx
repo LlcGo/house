@@ -4,16 +4,33 @@ import {Button} from "antd";
 import UserDrawer from "../../FrontComponents/login/UserDrawer.tsx";
 import UserRDrawer from "../../FrontComponents/register/UserRDrawer.tsx";
 import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as constants from "constants";
 import {User} from "../../../service/api/userAPI.ts";
 import FrontUserAvatar from "./UserAvatar.tsx";
+import {Link, useNavigate} from "react-router-dom";
 
 const FrontHeader = () => {
     // const {username} = useSelector((state: any) => state.user);
     const user : User = JSON.parse(window.localStorage.getItem('user')!)
     const [User,setUser] = useState<User>();
+    const route = useNavigate();
+    const toIndex = () => {
+        route('/')
+    }
 
+
+    const toWhole = () => {
+      route('/front/user/house',{ state: "whole"})
+    }
+
+    const toShare = () => {
+        route('/front/user/house',{ state: "share"})
+    }
+
+    const toFeedBack = () => {
+        route('/front/feedBack')
+    }
     return (
         <div className={style.box}>
             <div className={style.left}>
@@ -21,18 +38,18 @@ const FrontHeader = () => {
                 <p className={style.imgTitle}>坤坤租房</p>
             </div>
 
-            <div className={style.title1}>
+            <div onClick={toIndex} className={style.title1}>
                  首页
             </div>
-
+            {/**/}
             <div className={style.titleBox}>
-                <div className={style.title}>
+                <div onClick={toWhole} className={style.title}>
                     整租
                 </div>
-                <div className={style.title}>
+                <div onClick={toShare} className={style.title}>
                     合租
                 </div>
-                <div className={style.title}>
+                <div onClick={toFeedBack} className={style.title}>
                     用户反馈
                 </div>
             </div>
