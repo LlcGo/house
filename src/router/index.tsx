@@ -10,6 +10,7 @@ import UserCenter from "../pages/front/userCenter";
 import UserProfile from "../pages/front/userCenter/userProfile";
 import WholeHouse from "../pages/front/WholeHouse";
 import FeedBack from "../pages/front/FeedBack";
+import HouseDetail from "../pages/front/HouseDetail";
 
 const Register = lazy(() => import("../pages/user/register/Register.tsx"))
 const Home = lazy(() => import("../pages/home/Home.tsx"))
@@ -41,6 +42,7 @@ const routes = [
     // ]
     },
     {path: "/front/user/house", element: withLoadingComponent(<WholeHouse/>)} ,
+    {path: "/front/house/:id", element: withLoadingComponent(<HouseDetail/>)} ,
     {path: "/front/feedBack", element: withLoadingComponent(<FeedBack/>)} ,
     {path: "/user/home", element: withLoadingComponent(<Home/>)} ,
 

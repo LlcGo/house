@@ -310,4 +310,12 @@ export async function getHouse(houseVo:HouseSearchVO): Promise<HousePage> {
     });
 }
 
+export async function getHouseDetail(id:number): Promise<house> {
+    return myAxios(`house/detail/${id}`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
 

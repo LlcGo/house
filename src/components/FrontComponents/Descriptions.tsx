@@ -2,11 +2,18 @@ import style from "../../pages/front/index/FrontIndex.module.css";
 
 import {Button} from "antd";
 import React from "react";
+import {useNavigate} from "react-router-dom";
+import {house} from "../../service/api/userAPI.ts";
 
 
 const Descriptions = (props:any) => {
+    const route = useNavigate();
     // debugger
     let{list} = props
+
+    const toDetail =() => {
+        route('/front/house/'+list.id)
+    }
 
     const imgUrl = list?.thumbnailUrl?.replace("/src/main/resources/static","")
  // debugger
@@ -18,7 +25,7 @@ const Descriptions = (props:any) => {
             <div className={style.information}>
                 <img className={style.img} src={"http://localhost:8088" + imgUrl}/>
                 <div className={style.detilTitleBox}>
-                    <p className={style.infoP1}>{ list?.title }</p>
+                    <p onClick={toDetail} className={style.infoP1}>{ list?.title }</p>
                     <p className={style.infoP2}>{list?.address}</p>
                     <div>
                         <p className={style.infoP3}>￥{list?.monthRent}<p className={style.infoY}>/月</p></p>
