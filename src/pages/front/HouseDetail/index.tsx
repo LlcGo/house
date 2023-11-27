@@ -2,10 +2,18 @@ import {useParams} from "react-router-dom";
 import style from './HouseDetailIndex.module.css'
 import {getHouseDetail, house} from "../../../service/api/userAPI.ts";
 import React, {useEffect, useState} from "react";
-import {Badge, Collapse, CollapseProps, Descriptions, DescriptionsProps} from "antd";
+import {Badge, Button, Card, Carousel, Collapse, CollapseProps, Descriptions, DescriptionsProps} from "antd";
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { DatePicker, Space } from 'antd';
+
+dayjs.extend(customParseFormat);
+const { RangePicker } = DatePicker;
+const dateFormat = 'YYYY-MM-DD';
 
 
 const HouseDetail = () => {
+
     const params = useParams();
 
     const [house,setHouse] = useState<house>();
@@ -108,29 +116,81 @@ const HouseDetail = () => {
         <div>
             <div>
                 <div className={style.carousel}>
-                    <div>
-                        {house?.monthRent}
-                    </div>
-                    <div>
-                        {house?.title}
-                    </div>
-                    <div>
-                        {house?.address}
+                    <div className={style.carouselTop}>
+                        <div className={style.monthRent}>
+                            {house?.monthRent}/月
+                        </div>
+                        <div className={style.title}>
+                            {house?.title}
+                        </div>
+                        <div className={style.address}>
+                            {house?.address}
+                        </div>
                     </div>
 
-                    轮播图
+                    {/*轮播图*/}
+                    <Carousel autoplay className={style.buttomCarousel}>
+                        {house?.slideImgList.map(item=>{
+                           let imgUrl = item.replace("/src/main/resources/static","")
+                            return  <img className={style.img} src={"http://localhost:8088" + imgUrl}/>
+                        })}
+                    </Carousel>
+                    {/*轮播图*/}
                 </div>
             </div>
-        {/* */}
-        {/*    下边区域*/}
-        {/*    下边左详情*/}
-            <div>
-                <Collapse onChange={onChange} items={itemsNest} />;
-            </div>
-            {/*右边信息*/}
-            <div>
 
+            <div className={style.detailContain}>
+                {/*    下边区域*/}
+                {/*    下边左详情*/}
+                <div className={style.left}>
+                    <Collapse onChange={onChange} items={itemsNest} />;
+                    <Card>描述</Card>
+                </div>
+                {/*右边信息*/}
+                <div className={style.right}>
+                    <div>
+                        <Card>
+                            <Button type="primary" style={{minWidth:'200px',minHeight:'50px'}} >
+                                收藏
+                            </Button>
+                        </Card>
+                    </div>
+                    <div>
+                        <Card style={{marginTop:'20px'}}>
+                            <div className={style.rightDate}>
+                                top
+                            </div>
+                            <div className={style.rightDate1}>
+                                <RangePicker style={{minWidth:'100%',minHeight:'50px', marginBottom:'5%'}}
+                                    defaultValue={[dayjs('2019-09-03', dateFormat), dayjs('2019-11-22', dateFormat)]}
+                                    // disabled={[false, true]}
+                                />
+                                <RangePicker style={{minWidth:'100%',minHeight:'50px',}}
+                                    defaultValue={[dayjs('2019-09-03', dateFormat), dayjs('2019-11-22', dateFormat)]}
+                                    // disabled={[false, true]}
+                                />
+                            </div>
+                            <div>
+                                <Button type="primary" style={{minWidth:'100%',minHeight:'40px'}}>立即预定</Button>
+                            </div>
+                        </Card>
+                    </div>
+                    <div style={{marginTop:'20px'}}>
+                        <Card>
+                            <div className={style.houseTitle}>
+                                联系房东
+                            </div>
+                            <div style={{marginTop:'20px'}}>
+                                联系电话：
+                            </div>
+                            <div>
+                                联系时间：
+                            </div>
+                        </Card>
+                    </div>
+                </div>
             </div>
+
         </div>
     )
 }

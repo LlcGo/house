@@ -14,7 +14,11 @@ const FrontUserAvatar = (props: any) => {
 
     const items: MenuProps['items'] = [
         {
-            label: <a>订单管理</a>,
+            label:<Link to={'/front/userCenter/0'}>房间管理</Link>,
+            key: '8',
+        },
+        {
+            label: <Link to={'/front/userCenter/2'}>订单管理</Link>,
             key: '0',
         },
         {
@@ -22,25 +26,26 @@ const FrontUserAvatar = (props: any) => {
             key: '1',
         },
         {
-            label: <a >我的家</a>,
+            label: <Link to={'/front/userCenter/3'}>我的家</Link>,
             key: '3',
         },
         {
-            label: <a href="#">我的收藏</a>,
+            label: <Link to={'/front/userCenter/4'}>我的收藏</Link>,
             key: '4',
         },
         {
-            label: <a>密码修改</a>,
+            label: <Link to={'/front/userCenter/5'}>密码修改</Link>,
             key: '5',
         },
         {
-            label: <a href="#">我的反馈</a>,
+            label: <Link to={'/front/userCenter/6'}>用户反馈</Link>,
             key: '6',
         },
         {
             label: <a onClick={outLogin}>退出</a>,
             key: '7',
         },
+
 
     ];
 

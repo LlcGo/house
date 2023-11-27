@@ -10,6 +10,7 @@ import UserupdatePassword from "./UserupdatePassword";
 import UserFeedback from "./UserFeedback";
 import MyHouse from "./MyHouse";
 import MyMark from "./MyMark";
+import AdminManger from "./AdminManger";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -28,6 +29,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
+    getItem('房间管理', '0', <MailOutlined />),
     getItem('用户中心', '1', <MailOutlined />),
     getItem('订单管理', '2', <CalendarOutlined />),
     getItem('我的家', '3', <MailOutlined />),
@@ -43,7 +45,7 @@ const UserCenter = () => {
 
     const [mode, setMode] = useState<'vertical' | 'inline'>('inline');
     const [theme, setTheme] = useState<MenuTheme>('light');
-    const [type,setType] = useState(0);
+    const [type,setType] = useState(1);
 
     const params = useParams();
 
@@ -62,7 +64,7 @@ const UserCenter = () => {
                 <div className={style.title}>个人中心</div>
                 <Menu
                     style={{ width: '100%',height: '92%',background : '#fafafa',padding:'10px'}}
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={['0']}
                     defaultOpenKeys={['sub1']}
                     mode={mode}
                     theme={theme}
@@ -73,6 +75,11 @@ const UserCenter = () => {
 
 
             <div className={style.right}>
+                {
+                    type === 0 && <div>
+                         <AdminManger/>
+                    </div>
+                }
                 {
                     type === 1 && <div>
                           <UserProfile />

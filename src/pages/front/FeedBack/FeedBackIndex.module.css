@@ -1,5 +1,7 @@
 
 .box{
+    position: relative;
+    top: 30px;
     width: 80%;
     margin: 0 auto;
 }
@@ -25,7 +27,16 @@
 
 .right{
     float: left;
+    margin-left: 20px;
+    margin-top: 10px;
     /*background: red;*/
-    width: 40%;
+    width: 35%;
     height: 563px;
+}
+
+.button{
+    position: absolute;
+    left: -40%;
+    min-width:100px;
+    min-height:50px;
 }

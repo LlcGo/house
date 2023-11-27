@@ -25,7 +25,7 @@ const Descriptions = (props:any) => {
             <div className={style.information}>
                 <img className={style.img} src={"http://localhost:8088" + imgUrl}/>
                 <div className={style.detilTitleBox}>
-                    <p onClick={toDetail} className={style.infoP1}>{ list?.title }</p>
+                    <p onClick={toDetail}  className={style.infoP1}>{ list?.title }</p>
                     <p className={style.infoP2}>{list?.address}</p>
                     <div>
                         <p className={style.infoP3}>￥{list?.monthRent}<p className={style.infoY}>/月</p></p>

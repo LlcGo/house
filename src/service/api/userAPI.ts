@@ -47,7 +47,7 @@ export interface house {
     monthRent: number
     rentType: "whole"
     shareHouseList: null
-    slideImgList: null
+    slideImgList: Array<string>
     slideUrl: []
     //"[\"/src/main/resources/static/assets/img/uploads/87ca276c-63aa-450c-9e17-34cf653c4e1d.jpg\",\"/src/main/resources/static/assets/img/uploads/c7f32cbb-27bd-4e87-b7b2-8b57647a2ba7.jpg\",\"/src/main/resources/static/assets/img/uploads/5619bbf4-26e7-4459-82de-8feba362e2cf.jpg\",\"/src/main/resources/static/assets/img/uploads/d117f50d-27a5-419f-9041-c8033ba56c63.jpg\",\"/src/main/resources/static/assets/img/uploads/df82f73b-bd7a-41a1-93ae-c6db2864a65e.jpg\",\"/src/main/resources/static/assets/img/uploads/c838d4bd-04c5-421e-b32e-38e549bfa1b7.jpg\"]"
     status: 0
@@ -319,3 +319,13 @@ export async function getHouseDetail(id:number): Promise<house> {
     });
 }
 
+
+
+export async function getAdminHouse(): Promise<HousePage> {
+    return myAxios('/admin/house',{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
