@@ -36,7 +36,7 @@ export interface house {
     direction: string
     floor: number
     hasAirConditioner: number
-    hasElevator?: null
+    hasElevator?: number
     id: number
     kichenNum: number
     lastOrderEndTime?: null
@@ -321,11 +321,12 @@ export async function getHouseDetail(id:number): Promise<house> {
 
 
 
-export async function getAdminHouse(): Promise<HousePage> {
+export async function getAdminHouse(houseVo:HouseSearchVO): Promise<HousePage> {
     return myAxios('/admin/house',{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
+        params:{...houseVo}
     });
 }

@@ -3,14 +3,16 @@ import img from "../../assets/img/fimg.jpg";
 import {DeleteOutlined, EditOutlined, FallOutlined, ZoomInOutlined} from "@ant-design/icons";
 import React from "react";
 
-const MangerHouseDes = () => {
+const MangerHouseDes = (props:any) => {
+    let {list} = props;
+    const imgUrl = list?.thumbnailUrl?.replace("/src/main/resources/static","")
     return(
         <div className={style.container}>
             <div className={style.bord}>
                 <div>
-                    <img className={style.img} src={img}/>
-                    <div className={style.title1}>凤城五路地铁口 海璟时代 西安中学押一付 领包入住</div>
-                    <div className={style.title12}>文景路中段25号</div>
+                    <img className={style.img} src={"http://localhost:8088" + imgUrl}/>
+                    <div className={style.title1}>{list.title}</div>
+                    <div className={style.title12}>{list.address}</div>
                 </div>
 
                 <div className={style.imgBottom}>

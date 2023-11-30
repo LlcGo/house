@@ -21,71 +21,98 @@ const HouseDetail = () => {
     const items1: DescriptionsProps['items'] = [
         {
             key: '1',
-            label: 'Product',
-            children: 'Cloud Database',
+            label: '状态',
+            children: house?.status,
         },
         {
             key: '2',
-            label: 'Billing Mode',
-            children: 'Prepaid',
+            label: '类型',
+            children: house?.rentType === 'whole' ? '整租' : '合租',
         },
         {
             key: '3',
-            label: 'Automatic Renewal',
-            children: 'YES',
+            label: '租金',
+            children: house?.monthRent,
         },
+
         {
             key: '4',
-            label: 'Order time',
-            children: '2018-04-24 18:00:00',
+            label: '房产证编号',
+            children: house?.cetificateNo,
         },
         {
             key: '5',
-            label: 'Usage Time',
-            children: '2019-04-24 18:00:00',
-            span: 2,
+            label: '卧室数量',
+            children: house?.bedroomNum,
         },
         {
             key: '6',
-            label: 'Status',
-            children: <Badge status="processing" text="Running" />,
-            span: 3,
+            label: '卫生间数量',
+            children: house?.toiletNum,
         },
         {
             key: '7',
-            label: 'Negotiated Amount',
-            children: '$80.00',
+            label: '厨房数量',
+            children: house?.livingRoomNum,
         },
         {
             key: '8',
-            label: 'Discount',
-            children: '$20.00',
+            label: '客厅数量',
+            children: house?.livingRoomNum,
         },
         {
             key: '9',
-            label: 'Official Receipts',
-            children: '$60.00',
+            label: '房屋面积',
+            children: house?.area+'平米',
         },
+
         {
             key: '10',
-            label: 'Config Info',
-            children: (
-                <>
-                    Data disk type: MongoDB
-                    <br />
-                    Database version: 3.4
-                    <br />
-                    Package: dds.mongo.mid
-                    <br />
-                    Storage space: 10 GB
-                    <br />
-                    Replication factor: 3
-                    <br />
-                    Region: East China 1
-                    <br />
-                </>
-            ),
+            label: '是否有空调',
+            children: house?.hasAirConditioner === 1 ? '有':'无',
         },
+        {
+            key: '11',
+            label: '建成年份',
+            children: house?.hasElevator,
+        },
+        {
+            key: '12',
+            label: '朝向',
+            children: house?.direction,
+        },
+        {
+            key: '13',
+            label: '楼层',
+            children: house?.floor,
+        },
+        {
+            key: '14',
+            label: '是否有电梯',
+            children: house?.hasElevator === 1 ? '有' : '无',
+        },
+        {
+            key: '15',
+            label: '最后一次入住开始时间',
+            children: house?.lastOrderStartTime,
+        },
+
+        {
+            key: '16',
+            label: '最后一次入住结束时间',
+            children: house?.lastOrderEndTime,
+        },
+        {
+            key: '17',
+            label: '联系人姓名',
+            children: house?.contactName,
+        },
+        {
+            key: '18',
+            label: '联系人电话',
+            children: house?.contactPhone,
+        },
+
     ];
 
 
@@ -93,8 +120,8 @@ const HouseDetail = () => {
     const itemsNest: CollapseProps['items'] = [
         {
             key: '1',
-            label: 'This is panel nest panel',
-            children: <Descriptions title="User Info" bordered items={items1} />,
+            label: '详情',
+            children: <Descriptions title="房子详细信息" bordered items={items1} />,
         },
     ];
 
@@ -143,8 +170,13 @@ const HouseDetail = () => {
                 {/*    下边区域*/}
                 {/*    下边左详情*/}
                 <div className={style.left}>
-                    <Collapse onChange={onChange} items={itemsNest} />;
-                    <Card>描述</Card>
+                    <Collapse  defaultActiveKey={['1']}  onChange={onChange} items={itemsNest} />;
+                    <Card>
+                        描述:
+                        <div>
+                            {house?.content}
+                        </div>
+                    </Card>
                 </div>
                 {/*右边信息*/}
                 <div className={style.right}>
@@ -158,7 +190,10 @@ const HouseDetail = () => {
                     <div>
                         <Card style={{marginTop:'20px'}}>
                             <div className={style.rightDate}>
-                                top
+                                <div style={{marginLeft:'6px'}}>
+                                    {Math.ceil(house?.monthRent! / 30) }  / 天
+                                </div>
+
                             </div>
                             <div className={style.rightDate1}>
                                 <RangePicker style={{minWidth:'100%',minHeight:'50px', marginBottom:'5%'}}
@@ -181,10 +216,12 @@ const HouseDetail = () => {
                                 联系房东
                             </div>
                             <div style={{marginTop:'20px'}}>
-                                联系电话：
+                                联系电话： {house?.contactPhone}
                             </div>
                             <div>
                                 联系时间：
+                                上午：8:30 - 11:30
+                                下午：14:30 - 17:30
                             </div>
                         </Card>
                     </div>

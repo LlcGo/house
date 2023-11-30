@@ -75,6 +75,7 @@
 }
 
 .rightDate {
+    color: white;
     font-size: 30px;
     position: absolute;
     background: #1677ff;
