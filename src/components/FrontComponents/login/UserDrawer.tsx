@@ -13,7 +13,11 @@ const UserDrawer = (props:any) => {
         if(res){
             props.setUser(res)
         }
-        window.localStorage.setItem('user',JSON.stringify(res))
+        dispatch({
+            type:'addUser',
+            res
+        })
+        // window.localStorage.setItem('user',JSON.stringify(res))
        // alert(username)
     };
 

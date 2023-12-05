@@ -36,7 +36,7 @@ const Descriptions = (props:any) => {
                     <div className={style.infoBottomBox}>
                         <div className={style.infoBottomP}>
                             <p>{list?.bedroomNum}卧室</p>
-                            <p>{list?.livingRoomNum}卫生间</p>
+                            <p style={{marginLeft:'6px'}}>{list?.livingRoomNum}卫生间</p>
                         </div>
                         <Button type="dashed" className={style.infoBottomButton}>收藏</Button>
                     </div>

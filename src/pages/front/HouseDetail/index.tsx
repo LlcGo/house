@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import style from './HouseDetailIndex.module.css'
 import {getHouseDetail, house} from "../../../service/api/userAPI.ts";
 import React, {useEffect, useState} from "react";
@@ -6,6 +6,7 @@ import {Badge, Button, Card, Carousel, Collapse, CollapseProps, Descriptions, De
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { DatePicker, Space } from 'antd';
+import routes from "../../../router";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -15,7 +16,7 @@ const dateFormat = 'YYYY-MM-DD';
 const HouseDetail = () => {
 
     const params = useParams();
-
+    const route = useNavigate();
     const [house,setHouse] = useState<house>();
 
     const items1: DescriptionsProps['items'] = [
@@ -131,6 +132,12 @@ const HouseDetail = () => {
     },[])
 
 
+
+    const toPay = () => {
+        // /order/pay?orderId=10
+        route('/order/pay')
+    }
+
     const onChange = (key: string | string[]) => {
         console.log(key);
     };
@@ -206,7 +213,7 @@ const HouseDetail = () => {
                                 />
                             </div>
                             <div>
-                                <Button type="primary" style={{minWidth:'100%',minHeight:'40px'}}>立即预定</Button>
+                                <Button type="primary" onClick={toPay} style={{minWidth:'100%',minHeight:'40px'}}>立即预定</Button>
                             </div>
                         </Card>
                     </div>

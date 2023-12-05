@@ -11,6 +11,7 @@ import UserFeedback from "./UserFeedback";
 import MyHouse from "./MyHouse";
 import MyMark from "./MyMark";
 import AdminManger from "./AdminManger";
+import PublicHome from "./PublicHome";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -108,6 +109,11 @@ const UserCenter = () => {
                 {
                     type === 6 && <div>
                         <UserFeedback/>
+                    </div>
+                }
+                {
+                    type === 7 && <div>
+                        <PublicHome/>
                     </div>
                 }
             </div>

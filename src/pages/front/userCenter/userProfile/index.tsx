@@ -1,23 +1,27 @@
 import {Button, Col, Form, Input, Row} from "antd";
 import React, {useEffect} from "react";
 import TextArea from "antd/es/input/TextArea";
-
 import style from './UseProfileIndex.module.css'
+import {useSelector} from "react-redux";
 
 const UserProfile = () => {
 
-    const user  = JSON.parse(window.localStorage.getItem('user')!)
+
+    // const user  = JSON.parse(window.localStorage.getItem('user')!)
     const [form] = Form.useForm();
+    const user  = useSelector((state :RootState) => {return state?.user});
 
     useEffect(()=>{
         form.setFieldsValue(user)
     },[user])
 
+
+
     return(
-        <div className={style.box} >
+        <div className={style.box}>
             <div className={style.info}>
                 <div className={style.col}></div>
-                个人信息
+                个人信息 {user.username}
             </div>
 
                 <Form

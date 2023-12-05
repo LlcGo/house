@@ -1,0 +1,79 @@
+.box {
+    /*width: 600px;*/
+    height: 92vh;
+    width: 100%;
+    /*position: absolute;*/
+    /*left: 50%;*/
+    /*top: 50%;*/
+    /*transform: translate(-50%,-50%);*/
+
+}
+
+.contain {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*width: 800px;*/
+    height: 600px;
+    /*background: royalblue;*/
+    margin: 50px auto;
+}
+
+.card {
+    border: 1px solid #e5e5e5;
+    border-top: none;
+    padding: 10px;
+    height: 500px;
+    width: 619px;
+    background: white;
+    margin-top: 100px;
+}
+
+.title {
+    margin-left: 9%;
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+.money {
+    margin-left: 35%;
+    font-size: 42px;
+    margin-top: 10px;
+}
+
+.content {
+    font-family: "Microsoft YaHei";
+    font-size: 15px;
+    margin: 5px 0;
+    padding-bottom: 2px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.img {
+
+}
+
+.imgBox {
+    margin-left: 26%;
+    background-size: contain;
+    height: 300px;
+}
+
+.bottom {
+    position: relative;
+    margin-top: 20px;
+    border-top: 1px dashed #e5e5e5;
+    padding: 10px;
+}
+
+.left {
+    display: inline;
+    margin-left: 25%;
+}
+
+.right {
+    display: inline;
+    margin-left: 10%;
+}

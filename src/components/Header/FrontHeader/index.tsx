@@ -12,8 +12,8 @@ import {Link, useNavigate} from "react-router-dom";
 
 const FrontHeader = () => {
     // const {username} = useSelector((state: any) => state.user);
-    const user : User = JSON.parse(window.localStorage.getItem('user')!)
-    const [User,setUser] = useState<User>();
+    // const user : User = JSON.parse(window.localStorage.getItem('user')!)
+    const [user,setUser] = useState<User>();
     const route = useNavigate();
     const toIndex = () => {
         route('/')
