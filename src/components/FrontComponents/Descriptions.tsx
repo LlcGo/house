@@ -1,9 +1,10 @@
 import style from "../../pages/front/index/FrontIndex.module.css";
 
-import {Button} from "antd";
+import {Button, message} from "antd";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {house} from "../../service/api/userAPI.ts";
+import {Mark} from "../../service/api/oderAPI.ts";
 
 
 const Descriptions = (props:any) => {
@@ -15,6 +16,18 @@ const Descriptions = (props:any) => {
         route('/front/house/'+list.id)
     }
 
+    const mark = async () => {
+      const res = await Mark(list.id);
+      if(res.code === 1){
+          // messageApi.open({
+          //     type: 'success',
+          //     content: '收藏成功',
+          // });
+          message.success('收藏成功');
+      }else {
+          message.warning('您已收藏过');
+      }
+    }
     const imgUrl = list?.thumbnailUrl?.replace("/src/main/resources/static","")
  // debugger
     return(
@@ -38,7 +51,7 @@ const Descriptions = (props:any) => {
                             <p>{list?.bedroomNum}卧室</p>
                             <p style={{marginLeft:'6px'}}>{list?.livingRoomNum}卫生间</p>
                         </div>
-                        <Button type="dashed" className={style.infoBottomButton}>收藏</Button>
+                        <Button type="dashed" onClick={mark} className={style.infoBottomButton}>收藏</Button>
                     </div>
 
                 </div>

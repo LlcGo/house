@@ -2,22 +2,31 @@ import {useNavigate, useParams} from "react-router-dom";
 import style from './HouseDetailIndex.module.css'
 import {getHouseDetail, house} from "../../../service/api/userAPI.ts";
 import React, {useEffect, useState} from "react";
-import {Badge, Button, Card, Carousel, Collapse, CollapseProps, Descriptions, DescriptionsProps} from "antd";
+import {Badge, Button, Card, Carousel, Collapse, CollapseProps, Descriptions, DescriptionsProps, message} from "antd";
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { DatePicker, Space } from 'antd';
 import routes from "../../../router";
+import {Mark, orderCreate} from "../../../service/api/oderAPI.ts";
+import userDrawer from "../../../components/FrontComponents/login/UserDrawer.tsx";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = 'YYYY/MM/DD';
 
 
 const HouseDetail = () => {
 
+    const getDate =() =>{
+        let res =dayjs(new Date().toLocaleString()).format(dateFormat)
+        const d = res.split('/');
+        return d[1]+'/'+d[2] + '/' + d[0]
+    }
+
     const params = useParams();
     const route = useNavigate();
     const [house,setHouse] = useState<house>();
+    const [date,setDate] = useState<string>(getDate())
 
     const items1: DescriptionsProps['items'] = [
         {
@@ -118,6 +127,7 @@ const HouseDetail = () => {
 
 
 
+
     const itemsNest: CollapseProps['items'] = [
         {
             key: '1',
@@ -133,19 +143,42 @@ const HouseDetail = () => {
 
 
 
-    const toPay = () => {
+    const toPay = async () => {
+        alert(date)
+       // const res = await orderCreate(Number(params.id),date!);
+         // await orderCreate(Number(params.id),)
         // /order/pay?orderId=10
-        route('/order/pay')
+        // route('/order/pay')
+    }
+
+    const changeDate = (date : any, dateString: string) => {
+       const d = dateString[1].split('-');
+       setDate(d[1]+'/'+d[2] + '/' + d[0])
+
     }
 
     const onChange = (key: string | string[]) => {
         console.log(key);
     };
 
+    const mark = async () => {
+        const res = await Mark(Number(params.id));
+        if(res.code === 1){
+            // messageApi.open({
+            //     type: 'success',
+            //     content: '收藏成功',
+            // });
+            message.success('收藏成功');
+        }else {
+            message.warning('您已收藏过');
+        }
+    }
+
     const initData = async () =>{
        const res = await getHouseDetail(Number(params.id));
        setHouse(res);
     }
+    // @ts-ignore
     return (
         <div>
             <div>
@@ -189,7 +222,7 @@ const HouseDetail = () => {
                 <div className={style.right}>
                     <div>
                         <Card>
-                            <Button type="primary" style={{minWidth:'200px',minHeight:'50px'}} >
+                            <Button onClick={mark} type="primary" style={{minWidth:'200px',minHeight:'50px'}} >
                                 收藏
                             </Button>
                         </Card>
@@ -198,19 +231,18 @@ const HouseDetail = () => {
                         <Card style={{marginTop:'20px'}}>
                             <div className={style.rightDate}>
                                 <div style={{marginLeft:'6px'}}>
-                                    {Math.ceil(house?.monthRent! / 30) }  / 天
+                                    ￥{Math.ceil(house?.monthRent! / 30) }  / 天
                                 </div>
-
                             </div>
                             <div className={style.rightDate1}>
-                                <RangePicker style={{minWidth:'100%',minHeight:'50px', marginBottom:'5%'}}
-                                    defaultValue={[dayjs('2019-09-03', dateFormat), dayjs('2019-11-22', dateFormat)]}
+                                <RangePicker onChange={changeDate} style={{minWidth:'100%',minHeight:'50px', marginBottom:'5%'}}
+                                    defaultValue={[dayjs(new Date().toLocaleString(), dateFormat), dayjs(new Date().toLocaleString(), dateFormat)]}
                                     // disabled={[false, true]}
                                 />
-                                <RangePicker style={{minWidth:'100%',minHeight:'50px',}}
-                                    defaultValue={[dayjs('2019-09-03', dateFormat), dayjs('2019-11-22', dateFormat)]}
-                                    // disabled={[false, true]}
-                                />
+                                {/*<RangePicker style={{minWidth:'100%',minHeight:'50px',}}*/}
+                                {/*    defaultValue={[dayjs('2019-09-03', dateFormat), dayjs('2019-11-22', dateFormat)]}*/}
+                                {/*    // disabled={[false, true]}*/}
+                                {/*/>*/}
                             </div>
                             <div>
                                 <Button type="primary" onClick={toPay} style={{minWidth:'100%',minHeight:'40px'}}>立即预定</Button>
