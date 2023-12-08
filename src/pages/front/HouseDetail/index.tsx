@@ -144,11 +144,16 @@ const HouseDetail = () => {
 
 
     const toPay = async () => {
-        alert(date)
-       // const res = await orderCreate(Number(params.id),date!);
+        // console.log(Number(params.id),date)
+       const res = await orderCreate(Number(params.id),date.toString()!);
+        console.log(res)
+        if(res.code === 0){
+            message.warning(res.msg)
+            return;
+        }
          // await orderCreate(Number(params.id),)
         // /order/pay?orderId=10
-        // route('/order/pay')
+        route('/order/pay')
     }
 
     const changeDate = (date : any, dateString: string) => {

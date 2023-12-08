@@ -2,7 +2,7 @@ import myAxios from "../MyAxio.ts";
 import {User} from "./userAPI.ts";
 
 
-interface result {
+export interface result {
     code?: number
     msg?: string
     result? : null
@@ -29,7 +29,7 @@ export async function orderCreate(houseId:number,endDateStr:string): Promise<res
         },
         params:{
             houseId:houseId,
-            endDateStr:endDateStr
+            endDate:endDateStr
         }
     });
 }

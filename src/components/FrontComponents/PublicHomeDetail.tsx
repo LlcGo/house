@@ -19,26 +19,11 @@ import TextArea from "antd/es/input/TextArea";
 import {PlusOutlined} from "@ant-design/icons";
 import style from './PublicHomeIndex.module.less'
 import {Simulate} from "react-dom/test-utils";
-import {house} from "../../../../service/api/userAPI.ts";
-import submit = Simulate.submit;
-import {useLocation, useParams} from "react-router-dom";
-import dayjs from "dayjs";
-const PublicHome = () => {
 
+const PublicHomeDetail = () => {
 
-    const [house,setHouse] = useState({
-        rent_type: 'whole',
-        city : '南京',
-        home : 1,
-        bedroom_num: 1,
-        has_air_conditioner: 1,
-        living_room_num : 1,
-        toilet_num : 1,
-        has_elevator: 1,
-        // build_year: new Date().toLocaleDateString()
-    })
+    const [house,setHouse] = useState()
 
-    const props = useLocation();
 
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
@@ -46,17 +31,8 @@ const PublicHome = () => {
     const { token } = theme.useToken();
     const initInput = useRef();
 
-    const currentHouse = props?.state
-
     useEffect(()=>{
-        if(currentHouse){
-            currentHouse.buildYear = dayjs(currentHouse.buildYear)
-            form.setFieldsValue(currentHouse)
-            console.log('6666---->',currentHouse)
-            return;
-        }
         form.setFieldsValue(house);
-
     },[])
 
     // useEffect(()=>{
@@ -79,11 +55,8 @@ const PublicHome = () => {
         // console.log(value)
     }
 
-     return (
+    return (
         <div className={style.box} >
-            <div>
-                {currentHouse?.rent_type}
-            </div>
             <Form
                 form={form}
                 labelCol={{ span: 4 }}
@@ -99,7 +72,7 @@ const PublicHome = () => {
                                 基本信息
                             </div>
                             <div style={{marginTop:'6px'}}>
-                                <Form.Item name={'rentType'}  label="合租类型"  >
+                                <Form.Item name={'rent_type'}  label="合租类型"  >
                                     <Select >
                                         <Select.Option value="whole">整租</Select.Option>
                                         <Select.Option value="share">合租</Select.Option>
@@ -126,13 +99,13 @@ const PublicHome = () => {
                                 结构信息
                             </div>
                             <div style={{marginTop:'6px'}}>
-                                <Form.Item  name={"cetificateNo"}  label="房产证号" >
+                                <Form.Item  name={"cetificate_no"}  label="房产证号" valuePropName="checked">
                                     <Input />
                                 </Form.Item>
                                 <Form.Item name={'direction'} label="朝向">
                                     <Input />
                                 </Form.Item>
-                                <Form.Item name={'bedroomNum'} label="卧室数量">
+                                <Form.Item name={'home'} label="卧室数量">
                                     <Select >
                                         <Select.Option value="1">1</Select.Option>
                                         <Select.Option value="2">2</Select.Option>
@@ -140,7 +113,7 @@ const PublicHome = () => {
                                         <Select.Option value="4">4</Select.Option>
                                     </Select>
                                 </Form.Item>
-                                <Form.Item name={'kichenNum'} label="厨房数量">
+                                <Form.Item name={'bedroom_num'} label="厨房数量">
                                     <Select >
                                         <Select.Option value="1">1</Select.Option>
                                         <Select.Option value="2">2</Select.Option>
@@ -154,10 +127,10 @@ const PublicHome = () => {
                                 建筑信息
                             </div>
                             <div style={{marginTop:'6px'}}>
-                                <Form.Item name="buildYear" label="建成年份" >
+                                <Form.Item name="build_year" label="建成年份" >
                                     <DatePicker showTime format="YYYY-MM-DD" />
                                 </Form.Item>
-                                <Form.Item name={'maxFloor'} label="总楼层">
+                                <Form.Item name={'max_floor'} label="总楼层">
                                     <Input />
                                 </Form.Item>
                             </div>
@@ -171,7 +144,7 @@ const PublicHome = () => {
                                 联系人信息
                             </div>
                             <div style={{marginTop:'6px'}}>
-                                <Form.Item name={'contactName'}  label="联系人姓名">
+                                <Form.Item name={'contact_name'}  label="联系人姓名">
                                     <Input />
                                 </Form.Item>
                             </div>
@@ -184,7 +157,7 @@ const PublicHome = () => {
 
                 <div className={style.right}>
                     <div className={style.top}>
-                        <Form.Item name={'monthRent'} label="月租金">
+                        <Form.Item name={'month_rent'} label="月租金">
                             <Input />
                         </Form.Item>
                         <Form.Item name={'title'} label="房子标题信息">
@@ -196,19 +169,19 @@ const PublicHome = () => {
                         <Form.Item name={'area'} label="面积">
                             <Input />
                         </Form.Item>
-                        <Form.Item name={'hasAirConditioner'} label="是否有空调">
+                        <Form.Item name={'has_air_conditioner'} label="是否有空调">
                             <Select >
-                                <Select.Option value={0}>没有空调</Select.Option>
-                                <Select.Option value={1}>有空调</Select.Option>
+                                <Select.Option value="0">没有空调</Select.Option>
+                                <Select.Option value="1">有空调</Select.Option>
                             </Select>
                         </Form.Item>
-                        <Form.Item name={'livingRoomNum'}  label="客厅数量">
+                        <Form.Item name={'living_room_num'}  label="客厅数量">
                             <Select >
                                 <Select.Option value="1">1</Select.Option>
                                 <Select.Option value="2">2</Select.Option>
                             </Select>
                         </Form.Item>
-                        <Form.Item name={'toiletNum'} label="卫生间数量">
+                        <Form.Item name={'toilet_num'} label="卫生间数量">
                             <Select>
                                 <Select.Option value="1">1</Select.Option>
                                 <Select.Option value="2">2</Select.Option>
@@ -223,17 +196,17 @@ const PublicHome = () => {
                         <Form.Item name={'floor'} label="所在楼层">
                             <Input />
                         </Form.Item>
-                        <Form.Item name={'hasElevator'} label="是否有电梯">
+                        <Form.Item name={'has_elevator'} label="是否有电梯">
                             <Select>
-                                <Select.Option value={1}>有电梯</Select.Option>
-                                <Select.Option value={0}>没有电梯</Select.Option>
+                                <Select.Option value="1">有电梯</Select.Option>
+                                <Select.Option value="0">没有电梯</Select.Option>
                             </Select>
                         </Form.Item>
                     </div>
 
 
                     <div className={style.top3}>
-                        <Form.Item  name={'contactPhone'} label="联系人电话">
+                        <Form.Item  name={'contact_phone'} label="联系人电话">
                             <Input />
                         </Form.Item>
                     </div>
@@ -288,4 +261,4 @@ const PublicHome = () => {
 
 }
 
-export default PublicHome;
+export default PublicHomeDetail;

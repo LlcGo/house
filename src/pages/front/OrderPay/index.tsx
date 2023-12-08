@@ -1,6 +1,7 @@
 import {Button, Card} from "antd";
 import style from './OrderPayIndex.module.css'
 import pay from '../../../assets/img/pay.jpg'
+import {Link} from "react-router-dom";
 const OrderPay = () => {
     return <div className={style.box}>
         <div className={style.contain}>
@@ -19,9 +20,12 @@ const OrderPay = () => {
                 </div>
                 {/*下面*/}
                 <div className={style.bottom}>
-                    <div className={style.left}>
+                    <Link to={'/front/index'} className={style.left}>
                         稍后支付，回到首页
-                    </div>
+                    </Link>
+                    {/*<div  className={style.left}>*/}
+                    {/*   */}
+                    {/*</div>*/}
                     <div className={style.right}>
                         <Button>模拟支付成功支付</Button>
                     </div>

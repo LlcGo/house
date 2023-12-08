@@ -1,9 +1,11 @@
 
-import {Button, Carousel, Form, InputNumber, Input, Card} from "antd";
+import {Button, Carousel, Form, InputNumber, Input, Card, message} from "antd";
 import zw from "../../../assets/img/feedBackImg.jpg";
 import style from './FeedBackIndex.module.css'
 import React from "react";
 import HouseStyle from '../HouseDetail/HouseDetailIndex.module.css'
+import {feedNote} from "../../../service/api/userAPI.ts";
+import {useNavigate} from "react-router-dom";
 
 const layout = {
   // labelCol: { span: 8 },
@@ -23,11 +25,20 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const onFinish = (values: any) => {
-  console.log(values);
-};
+
 
 const FeedBack = () => {
+  const route = useNavigate();
+
+  const onFinish = async (values: any) => {
+    // console.log(values);
+    const res = await feedNote(values)
+    if(res.code === 1){
+      message.success(res.msg);
+      route('/front/index')
+    }
+  };
+
   return(
       <div>
         {/*轮播图*/}
@@ -48,16 +59,16 @@ const FeedBack = () => {
                     style={{ maxWidth: 600 }}
                     validateMessages={validateMessages}
                 >
-                  <Form.Item name={['user', 'name']} label="姓名：">
+                  <Form.Item name={'contactName'} label="姓名：">
                     <Input style={{minHeight:'50px'}} />
                   </Form.Item>
-                  <Form.Item name={['user', 'email']} label="邮箱：" >
+                  <Form.Item name={'contactEmail'} label="邮箱：" >
                     <Input style={{minHeight:'50px'}} />
                   </Form.Item>
-                  <Form.Item name={['user', 'age']} label="标题：" >
+                  <Form.Item name={['title']} label="标题：" >
                     <Input style={{minHeight:'50px'}} />
                   </Form.Item>
-                  <Form.Item  name={['user', 'introduction']} label="内容：">
+                  <Form.Item  name={['content']} label="内容：">
                     <Input.TextArea  rows={6} />
                   </Form.Item>
                   <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

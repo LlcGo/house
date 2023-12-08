@@ -18,6 +18,7 @@ const AdminManger = () => {
         initData(1,10);
     },[])
 
+
     const initData = async (page?:number,pageSize?:number) => {
         setPage(page);
         let houseData: HouseSearchVO = {
@@ -44,7 +45,7 @@ const AdminManger = () => {
               <div className={Userstyle.col}></div>
               房间管理
               <Button onClick={toPublic} style={{    position: 'relative',
-                  left:'87%'}} type={'primary'}>fabu</Button>
+                  left:'87%'}} type={'primary'}>发布新房</Button>
           </div>
 
           <div className={style.warp}>

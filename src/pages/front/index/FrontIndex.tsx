@@ -4,6 +4,7 @@ import style from './FrontIndex.module.css'
 import Descriptions from "../../../components/FrontComponents/Descriptions.tsx";
 import zw from '../../../assets/img/shouye.jpg'
 import {getIndexModel, house} from "../../../service/api/userAPI.ts";
+import {useNavigate} from "react-router-dom";
 // const contentStyle: React.CSSProperties = {
 //     margin: 0,
 //     height: '600px',
@@ -16,6 +17,7 @@ const FrontIndex = () =>{
 
     const [topList,setTopList] = useState<house[]>([])
     const [list,setList] = useState<house[]>([])
+    const route = useNavigate();
 
     useEffect( ()=>{
         getModel().then()
@@ -30,6 +32,15 @@ const FrontIndex = () =>{
         setList((prevState)=>{ return {...prevState,...data2}})
 
     }
+
+    const goWhole = () => {
+       route('/front/user/house',{state:'whole'})
+    }
+
+    const goShare = () => {
+        route('/front/user/house',{state:'share'})
+    }
+
     // alert(topList != null)
     return(
         <div>
@@ -64,9 +75,8 @@ const FrontIndex = () =>{
                 <Descriptions list={topList[3]}/>
                 <Descriptions list={topList[4]}/>
                 <Descriptions list={topList[5]}/>
-
                <div className={style.bottomButton}>
-                     <Button type={"primary"} className={style.button}>查看更多</Button>
+                     <Button onClick={goWhole} type={"primary"} className={style.button}> 查看更多</Button>
                </div>
             </div>
         </div>
@@ -88,7 +98,7 @@ const FrontIndex = () =>{
                     <Descriptions list={list[5]}/>
 
                     <div className={style.bottomButton}>
-                        <Button type={"primary"} className={style.button}>查看更多</Button>
+                        <Button onClick={goShare} type={"primary"} className={style.button}>查看更多</Button>
                     </div>
                 </div>
             </div>

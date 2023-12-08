@@ -1,4 +1,5 @@
 import myAxios from "../MyAxio.ts";
+import {result} from "./oderAPI.ts";
 
 
 /**
@@ -328,5 +329,53 @@ export async function getAdminHouse(houseVo:HouseSearchVO): Promise<HousePage> {
             'Content-Type': 'application/json',
         },
         params:{...houseVo}
+    });
+}
+
+
+
+// @RequestMapping(value = "/feedback/submit",method = RequestMethod.POST)
+// @ResponseBody
+// public JsonResult submit(@RequestParam("contactName")String contactName,
+// @RequestParam("contactEmail")String contactEmail,
+// @RequestParam("title")String title,
+// @RequestParam("content")String content){
+//contactName:string,contactEmail:string,title:string,content:string
+export async function feedNote(values:any): Promise<result> {
+    return myAxios('/feedback/submit',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params:{
+            contactName: values.contactName,
+            contactEmail: values.contactEmail,
+            title: values.title,
+            content: values.content,
+        }
+    });
+}
+
+export async function toDownHouse(id:any): Promise<result> {
+        return myAxios('/admin/down',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params:{
+                id:id
+            }
+        });
+}
+
+export async function toUpHome(id:any): Promise<result> {
+    return myAxios('/admin/up',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params:{
+            id:id
+        }
     });
 }
