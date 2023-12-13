@@ -27,6 +27,7 @@ const HouseDetail = () => {
     const route = useNavigate();
     const [house,setHouse] = useState<house>();
     const [date,setDate] = useState<string>(getDate())
+    const [number,setNumber] = useState<number>()
 
     const items1: DescriptionsProps['items'] = [
         {
@@ -144,7 +145,8 @@ const HouseDetail = () => {
 
 
     const toPay = async () => {
-        // console.log(Number(params.id),date)
+        console.log(Number(params.id),date)
+        // return;
        const res = await orderCreate(Number(params.id),date.toString()!);
         console.log(res)
         if(res.code === 0){
@@ -153,10 +155,23 @@ const HouseDetail = () => {
         }
          // await orderCreate(Number(params.id),)
         // /order/pay?orderId=10
-        route('/order/pay')
+        let data = {
+            orderId:res.result,
+            dataNumber: number
+        }
+        route('/order/pay',{state:data})
     }
 
     const changeDate = (date : any, dateString: string) => {
+        let  startDate = Date.parse(dateString[0]);
+        let  endDate = Date.parse(dateString[1]);
+        // console.log('data',startDate)
+        // console.log('end',endDate)
+        let days=(endDate - startDate)/(1*24*60*60*1000);
+        console.log('number',days);
+        setNumber(days);
+        // console.log('startDate',startDate)
+        // console.log('endDate',endDate)
        const d = dateString[1].split('-');
        setDate(d[1]+'/'+d[2] + '/' + d[0])
 

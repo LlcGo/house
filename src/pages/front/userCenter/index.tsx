@@ -12,6 +12,7 @@ import MyHouse from "./MyHouse";
 import MyMark from "./MyMark";
 import AdminManger from "./AdminManger";
 import PublicHome from "./PublicHome";
+import UserManger from "./UserManger";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -31,6 +32,7 @@ function getItem(
 
 const items: MenuItem[] = [
     getItem('房间管理', '0', <MailOutlined />),
+    getItem('用户管理', '8', <MailOutlined />),
     getItem('用户中心', '1', <MailOutlined />),
     getItem('订单管理', '2', <CalendarOutlined />),
     getItem('我的家', '3', <MailOutlined />),
@@ -114,6 +116,11 @@ const UserCenter = () => {
                 {
                     type === 7 && <div>
                         <PublicHome/>
+                    </div>
+                }
+                {
+                    type === 8 && <div>
+                       <UserManger/>
                     </div>
                 }
             </div>

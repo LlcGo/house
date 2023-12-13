@@ -180,8 +180,18 @@ export interface HouseSearchVO {
     rentType?: string;
 }
 
-export interface HousePage{
+export interface HousePage {
     records?: Array<house>,
+    total?: number,
+    size?: number,
+    current?: number,
+    orders?: Array<Orders>,
+    searchCount?: boolean,
+    pages?: number,
+}
+
+export interface UserPage {
+    records?: Array<User>,
     total?: number,
     size?: number,
     current?: number,
@@ -263,12 +273,16 @@ export async function getIndexModel(): Promise<Array<house[]>> {
 }
 
 
-export async function getOrders(): Promise<OrderPage> {
+export async function getOrders(page:number,pageSize:number): Promise<OrderPage> {
     return myAxios('/admin/order', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
+        params: {
+            page: page,
+            size: pageSize,
+        }
     });
 }
 
@@ -301,18 +315,18 @@ export async function getMyMark(): Promise<MarkPage> {
     });
 }
 
-export async function getHouse(houseVo:HouseSearchVO): Promise<HousePage> {
-    return myAxios('/house',{
+export async function getHouse(houseVo: HouseSearchVO): Promise<HousePage> {
+    return myAxios('/house', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        params:{...houseVo}
+        params: {...houseVo}
     });
 }
 
-export async function getHouseDetail(id:number): Promise<house> {
-    return myAxios(`house/detail/${id}`,{
+export async function getHouseDetail(id: number): Promise<house> {
+    return myAxios(`house/detail/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -321,17 +335,15 @@ export async function getHouseDetail(id:number): Promise<house> {
 }
 
 
-
-export async function getAdminHouse(houseVo:HouseSearchVO): Promise<HousePage> {
-    return myAxios('/admin/house',{
+export async function getAdminHouse(houseVo: HouseSearchVO): Promise<HousePage> {
+    return myAxios('/admin/house', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        params:{...houseVo}
+        params: {...houseVo}
     });
 }
-
 
 
 // @RequestMapping(value = "/feedback/submit",method = RequestMethod.POST)
@@ -341,13 +353,13 @@ export async function getAdminHouse(houseVo:HouseSearchVO): Promise<HousePage> {
 // @RequestParam("title")String title,
 // @RequestParam("content")String content){
 //contactName:string,contactEmail:string,title:string,content:string
-export async function feedNote(values:any): Promise<result> {
-    return myAxios('/feedback/submit',{
+export async function feedNote(values: any): Promise<result> {
+    return myAxios('/feedback/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        params:{
+        params: {
             contactName: values.contactName,
             contactEmail: values.contactEmail,
             title: values.title,
@@ -356,26 +368,100 @@ export async function feedNote(values:any): Promise<result> {
     });
 }
 
-export async function toDownHouse(id:any): Promise<result> {
-        return myAxios('/admin/down',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params:{
-                id:id
-            }
-        });
-}
-
-export async function toUpHome(id:any): Promise<result> {
-    return myAxios('/admin/up',{
+export async function toDownHouse(id: any): Promise<result> {
+    return myAxios('/admin/down', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        params:{
+        params: {
+            id: id
+        }
+    });
+}
+
+export async function toUpHome(id: any): Promise<result> {
+    return myAxios('/admin/up', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params: {
+            id: id
+        }
+    });
+}
+
+
+export async function userSubmit(user: User): Promise<result> {
+    return myAxios('/admin/profile/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: user
+    });
+}
+
+export async function userUpdatePassWord(oldPassword: string, newPassword: string, confirmPassword: string): Promise<result> {
+    return myAxios('/admin/password/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params: {
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+            confirmPassword: confirmPassword
+        }
+    });
+}
+
+
+export async function getAllUser(page: number, size: number): Promise<UserPage> {
+    return myAxios('/admin/user', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params: {
+            page: page,
+            size: size,
+        }
+    });
+}
+
+
+export async function enableUser(id:any): Promise<result> {
+    return myAxios('/admin/user/enable', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params: {
             id:id
         }
+    });
+}
+
+export async function disableUser(id:any): Promise<result> {
+    return myAxios('/admin/user/disable', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params: {
+            id:id
+        }
+    });
+}
+
+
+export async function currentUser(): Promise<User> {
+    return myAxios('/admin/profile', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     });
 }

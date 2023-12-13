@@ -15,6 +15,12 @@ const FrontHeader = () => {
     // const user : User = JSON.parse(window.localStorage.getItem('user')!)
     const [user,setUser] = useState<User>();
     const route = useNavigate();
+    const currentUser = useSelector((state:RootState) => state.user);
+
+    useEffect(()=>{
+        setUser(currentUser);
+    },[])
+
     const toIndex = () => {
         route('/')
     }

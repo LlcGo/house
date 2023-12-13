@@ -4,9 +4,11 @@ import type { MenuProps } from 'antd';
 import {Avatar, Dropdown, Image, Space} from 'antd';
 import avatar from '/src/assets/img/avatar.jpg'
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 
 const FrontUserAvatar = (props: any) => {
+
     const outLogin = () => {
         props.setUser('')
     }

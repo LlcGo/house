@@ -6,15 +6,29 @@ import {Content, Footer, Header} from "antd/es/layout/layout";
 import MyHeader from "./components/Header/BackHeader";
 import style from './App.module.css'
 import routes from "./router";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import BackHeader from "./components/Header/BackHeader";
 import BackCombine from "./components/Combine/BackCombine/BackCombine.tsx";
 import FrontCombine from "./components/Combine/FrontCombine/FrontCombine.tsx";
+import {currentUser} from "./service/api/userAPI.ts";
+import {useDispatch} from "react-redux";
 
 
 const App = () => {
     const path = new URL(window.location.href);
     const route = useRoutes(routes);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        current()
+    },[path])
+    const current = async () => {
+        const res = await currentUser();
+        // console.log('用户---->',res)
+        dispatch({type:'addUser',payload:res},)
+        // alert(1)
+        // console.log('当前用户',res)
+    }
+
     return (
         <>
             {

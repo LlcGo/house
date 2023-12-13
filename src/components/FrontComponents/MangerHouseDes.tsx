@@ -5,15 +5,12 @@ import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {toDownHouse, toUpHome} from "../../service/api/userAPI.ts";
 import {message} from "antd";
+import {deleteHouse} from "../../service/api/oderAPI.ts";
 
 const MangerHouseDes = (props: any) => {
     let {list} = props;
     const route = useNavigate();
     const imgUrl = list?.thumbnailUrl?.replace("/src/main/resources/static", "")
-
-
-
-
     const toDetail = () => {
         console.log('查看详情')
         route(`/front/house/${list.id}`)
@@ -34,8 +31,9 @@ const MangerHouseDes = (props: any) => {
         message.success(res.msg)
     }
 
-    const deleteHome = () => {
-        console.log('删除房间')
+    const deleteHome = async () => {
+        const res = await deleteHouse(list.id);
+        message.success(res.msg);
     }
 
     return (
@@ -53,7 +51,7 @@ const MangerHouseDes = (props: any) => {
                     </div>
                     <div onClick={toEdit} className={style.iconBox}>
                         <EditOutlined/>
-                    </div> {list.status}
+                    </div>
                     {
                         list.status === -1 ? <div   onClick={upHome} className={style.iconBox}>
                             <DownOutlined/>

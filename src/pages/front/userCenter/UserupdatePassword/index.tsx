@@ -1,6 +1,7 @@
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, message} from "antd";
 import style from "../userProfile/UseProfileIndex.module.css";
 import React from "react";
+import {userUpdatePassWord} from "../../../../service/api/userAPI.ts";
 
 
 
@@ -10,8 +11,11 @@ interface updateUser {
     confPassword?:string
 }
 
-const onFinish = (values: updateUser) => {
-    console.log('Success:', values);
+const onFinish = async (values: updateUser) => {
+    const res = await userUpdatePassWord(values.password!,values.newPassword!,values.confPassword!);
+    if(res.code === 1)message.success(res.msg)
+    if(res.code === 0)message.warning(res.msg)
+
 };
 
 // const onFinishFailed = (errorInfo: any) => {

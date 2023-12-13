@@ -1,8 +1,9 @@
-import {Button, Col, Form, Input, Row} from "antd";
+import {Button, Col, Form, Input, message, Row} from "antd";
 import React, {useEffect} from "react";
 import TextArea from "antd/es/input/TextArea";
 import style from './UseProfileIndex.module.css'
 import {useSelector} from "react-redux";
+import {userSubmit} from "../../../../service/api/userAPI.ts";
 
 const UserProfile = () => {
 
@@ -16,6 +17,10 @@ const UserProfile = () => {
     },[user])
 
 
+    const submit = async (value:any) => {
+        const res = await userSubmit(value);
+        message.success(res.msg);
+    }
 
     return(
         <div className={style.box}>
@@ -28,6 +33,7 @@ const UserProfile = () => {
                     form={form}
                     layout="vertical"
                     style={{marginLeft : '10%',marginTop :'2%'}}
+                    onFinish={submit}
                 >
                     <Row>
                         <Col span={12}>
@@ -86,7 +92,7 @@ const UserProfile = () => {
                         position : "relative",
                         right: '10%'
                     }}>
-                        <Button type="primary">Submit</Button>
+                        <Button type="primary" htmlType="submit" >Submit</Button>
                     </Form.Item>
 
                 </Form>

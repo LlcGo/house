@@ -13,7 +13,7 @@ import {
     Slider,
     ColorPicker,
     Select,
-    TreeSelect, Space, Calendar, theme, CalendarProps
+    TreeSelect, Space, Calendar, theme, CalendarProps, UploadFile, UploadProps, message
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import {PlusOutlined} from "@ant-design/icons";
@@ -23,6 +23,8 @@ import {house} from "../../../../service/api/userAPI.ts";
 import submit = Simulate.submit;
 import {useLocation, useParams} from "react-router-dom";
 import dayjs from "dayjs";
+import {RcFile} from "antd/es/upload";
+import {publishSubmit, uploadFile} from "../../../../service/api/oderAPI.ts";
 const PublicHome = () => {
 
 
@@ -39,7 +41,9 @@ const PublicHome = () => {
     })
 
     const props = useLocation();
-
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [uploading, setUploading] = useState(false);
+    const [key, setKey] = useState<number>();
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
     const [form] = Form.useForm();
@@ -72,12 +76,47 @@ const PublicHome = () => {
     };
 
 
-    const onFinish = (values: any) => {
-        values.build_year =values['build_year'].format('YYYY-MM-DD')
+    const onFinish = async (values: any) => {
+        values.build_year =values['buildYear'].format('YYYY-MM-DD')
         console.log(values)
+        const res = await publishSubmit(key!);
+        setKey(undefined);
+        if(res.code === 0){
+            message.error(res.msg)
+            return;
+        }
+        message.success(res.msg)
         // console.log(form)
         // console.log(value)
     }
+
+    const handleUpload = async () => {
+        const formData = new FormData();
+        fileList.forEach((file) => {
+            formData.append('file', file as RcFile);
+        });
+        setUploading(true);
+        let timestamp = Date.parse(new Date().toLocaleString());
+        setKey(timestamp);
+        console.log(timestamp)
+        // return;
+        const res = await uploadFile(timestamp,formData);
+        message.success(res.msg)
+    };
+
+    const uploadProps: UploadProps = {
+        onRemove: (file) => {
+            const index = fileList.indexOf(file);
+            const newFileList = fileList.slice();
+            newFileList.splice(index, 1);
+            setFileList(newFileList);
+        },
+        beforeUpload: (file) => {
+            setFileList([...fileList, file]);
+            return false;
+        },
+        fileList,
+    };
 
      return (
         <div className={style.box} >
@@ -259,13 +298,16 @@ const PublicHome = () => {
                             上传图片
                         </div>
                         <Form.Item name={'thumbnail_url'} className={style.upload}  valuePropName="fileList" getValueFromEvent={normFile}>
-                            <Upload  action="/upload.do" listType="picture-card">
+                            <Upload {...uploadProps} listType="picture-card">
                                 <div>
                                     <PlusOutlined />
                                     <div style={{ marginTop: 8 }}>房间图片</div>
                                 </div>
                             </Upload>
                         </Form.Item>
+                        <div>
+                            <Button type={"primary"} onClick={handleUpload}>上传</Button>
+                        </div>
                     </div>
                 </div>
 

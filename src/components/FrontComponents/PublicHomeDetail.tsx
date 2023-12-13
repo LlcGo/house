@@ -13,18 +13,20 @@ import {
     Slider,
     ColorPicker,
     Select,
-    TreeSelect, Space, Calendar, theme, CalendarProps
+    TreeSelect, Space, Calendar, theme, CalendarProps, UploadFile, UploadProps
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import {PlusOutlined} from "@ant-design/icons";
 import style from './PublicHomeIndex.module.less'
 import {Simulate} from "react-dom/test-utils";
+import {RcFile} from "antd/es/upload";
+import {publishSubmit} from "../../service/api/oderAPI.ts";
 
 const PublicHomeDetail = () => {
 
     const [house,setHouse] = useState()
-
-
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [uploading, setUploading] = useState(false);
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
     const [form] = Form.useForm();
@@ -54,6 +56,28 @@ const PublicHomeDetail = () => {
         // console.log(form)
         // console.log(value)
     }
+
+    const handleUpload = () => {
+        const formData = new FormData();
+        fileList.forEach((file) => {
+            formData.append('files[]', file as RcFile);
+        });
+        setUploading(true);
+    };
+
+    const props: UploadProps = {
+        onRemove: (file) => {
+            const index = fileList.indexOf(file);
+            const newFileList = fileList.slice();
+            newFileList.splice(index, 1);
+            setFileList(newFileList);
+        },
+        beforeUpload: (file) => {
+            setFileList([...fileList, file]);
+            return false;
+        },
+        fileList,
+    };
 
     return (
         <div className={style.box} >
@@ -232,13 +256,16 @@ const PublicHomeDetail = () => {
                             上传图片
                         </div>
                         <Form.Item name={'thumbnail_url'} className={style.upload}  valuePropName="fileList" getValueFromEvent={normFile}>
-                            <Upload  action="/upload.do" listType="picture-card">
+                            <Upload {...props} listType="picture-card">
                                 <div>
                                     <PlusOutlined />
                                     <div style={{ marginTop: 8 }}>房间图片</div>
                                 </div>
                             </Upload>
                         </Form.Item>
+                        <div>
+                            <Button type={"primary"} onClick={handleUpload}>上传</Button>
+                        </div>
                     </div>
                 </div>
 

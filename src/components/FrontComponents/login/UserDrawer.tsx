@@ -15,7 +15,7 @@ const UserDrawer = (props:any) => {
         }
         dispatch({
             type:'addUser',
-            res
+            payload:res,
         })
         // window.localStorage.setItem('user',JSON.stringify(res))
        // alert(username)

@@ -5,6 +5,7 @@ import Descriptions from "../../../components/FrontComponents/Descriptions.tsx";
 import zw from '../../../assets/img/shouye.jpg'
 import {getIndexModel, house} from "../../../service/api/userAPI.ts";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 // const contentStyle: React.CSSProperties = {
 //     margin: 0,
 //     height: '600px',
@@ -17,10 +18,12 @@ const FrontIndex = () =>{
 
     const [topList,setTopList] = useState<house[]>([])
     const [list,setList] = useState<house[]>([])
+
     const route = useNavigate();
 
     useEffect( ()=>{
         getModel().then()
+        // console.log('用户--------->',user)
     },[])
 
     const getModel = async () => {
