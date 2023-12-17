@@ -1,5 +1,5 @@
 import myAxios from "../MyAxio.ts";
-import {FeedBack, Order, User} from "./userAPI.ts";
+import {FeedBack, house, Order, User} from "./userAPI.ts";
 
 
 export interface result {
@@ -69,15 +69,17 @@ export async function uploadFile(key: number,file:FormData): Promise<result> {
     });
 }
 
-export async function publishSubmit(key: number): Promise<result> {
+export async function publishSubmit(House:house,key: number): Promise<result> {
     return myAxios('/admin/publish/submit', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         params:{
+
             key:key
-        }
+        },
+        data:House,
     });
 }
 

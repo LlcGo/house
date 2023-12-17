@@ -77,9 +77,11 @@ const PublicHome = () => {
 
 
     const onFinish = async (values: any) => {
-        values.build_year =values['buildYear'].format('YYYY-MM-DD')
-        console.log(values)
-        const res = await publishSubmit(key!);
+        values.id = currentHouse.id;
+        values.buildYear = values['buildYear'].format('YYYY-MM-DD')
+        console.log('onFinish--->',values)
+        // return;
+        const res = await publishSubmit(values,key!);
         setKey(undefined);
         if(res.code === 0){
             message.error(res.msg)

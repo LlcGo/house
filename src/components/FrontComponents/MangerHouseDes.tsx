@@ -8,7 +8,7 @@ import {message} from "antd";
 import {deleteHouse} from "../../service/api/oderAPI.ts";
 
 const MangerHouseDes = (props: any) => {
-    let {list} = props;
+    let {list,initData} = props;
     const route = useNavigate();
     const imgUrl = list?.thumbnailUrl?.replace("/src/main/resources/static", "")
     const toDetail = () => {
@@ -19,21 +19,25 @@ const MangerHouseDes = (props: any) => {
     const toEdit = () => {
         console.log(list)
         route('/front/userCenter/7', {state: list})
+
     }
 
     const downHome = async () => {
         const res = await toDownHouse(list.id);
         message.success(res.msg)
+        initData(1,10)
     }
 
     const upHome = async () => {
         const res = await toUpHome(list.id);
         message.success(res.msg)
+        initData(1,10)
     }
 
     const deleteHome = async () => {
         const res = await deleteHouse(list.id);
         message.success(res.msg);
+        initData(1,10)
     }
 
     return (

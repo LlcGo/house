@@ -50,7 +50,7 @@ const AdminManger = () => {
 
           <div className={style.warp}>
               {
-                      housePage?.records?.map(item => <MangerHouseDes list={item}/>)
+                      housePage?.records?.map(item => <MangerHouseDes list={item} initData={initData} />)
               }
           </div>
           <Pagination style={{display:'flex',justifyContent:'center'}} onChange={(page,pageSize)=>{

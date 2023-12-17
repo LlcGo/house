@@ -5,68 +5,71 @@ import {getMyHouse, getMyMark, getOrders, Mark, Order} from "../../../../service
 import style from '../UserOrder/UseOrderIndex.module.less'
 import UserProcss from '../userProfile/UseProfileIndex.module.css'
 import {deleteMark} from "../../../../service/api/oderAPI.ts";
-const columns: ColumnsType<Mark> = [
-    {
-        title: '收藏列表',
-        dataIndex: 'house',
-        key: 'house',
-        width:'1000px',
-        render: (_, { house }) => (
-            <div className={style.imgBox}>
-                <div className={style.columnsImgLeft}>
-                    <img style={{width:'150px',height:'110px'}} src={"http://localhost:8088" + house?.thumbnailUrl.replace("/src/main/resources/static","")}/>
-                </div>
-                <div className={style.columnsImgRight}>
-                    <div>{house?.title}</div>
-                    <div>地区：{house?.address}</div>
-                </div>
-            </div>
-        ),
-    },
-    {
-        title: '操作',
-        dataIndex: 'customerUser',
-        key: 'customerUser',
-        render: (_,{id}) => (
-            <Button onClick={()=>{deleteM(id!)}}>取消收藏</Button>
-        ),
-    },
-];
 
-const deleteM = async (id:number) => {
-    const res = await deleteMark(id)
-    if(res.code === 1) message.success(res.msg)
-    if(res.code === 0) message.warning(res.msg)
-}
-{/*订单状态：-3 租客已取消 -2 待签合同 -1 待付款 0 生效中 1 已到期 2 退租申请 3 退租申请不通过*/}
-const getStatusTitle = (status:number) => {
-    switch (status){
-        case -3:
-            return '租客已取消'
-        case -2:
-            return '待签合同'
-        case -1:
-            return '待付款'
-        case 0:
-            return '生效中'
-        case 1:
-            return '已到期'
-        case 2:
-            return '退租申请'
-        case 3:
-            return '退租申请不通过'
-        default:
-
-    }
-}
 
 
 
 
 
 const MyHouse = () => {
-
     const [mark,setMark] = useState<Array<Mark>>()
+
+    const columns: ColumnsType<Mark> = [
+        {
+            title: '收藏列表',
+            dataIndex: 'house',
+            key: 'house',
+            width:'1000px',
+            render: (_, { house }) => (
+                <div className={style.imgBox}>
+                    <div className={style.columnsImgLeft}>
+                        <img style={{width:'150px',height:'110px'}} src={"http://localhost:8088" + house?.thumbnailUrl.replace("/src/main/resources/static","")}/>
+                    </div>
+                    <div className={style.columnsImgRight}>
+                        <div>{house?.title}</div>
+                        <div>地区：{house?.address}</div>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            title: '操作',
+            dataIndex: 'customerUser',
+            key: 'customerUser',
+            render: (_,{id}) => (
+                <Button onClick={()=>{deleteM(id!)}}>取消收藏</Button>
+            ),
+        },
+    ];
+
+    const deleteM = async (id:number) => {
+        const res = await deleteMark(id)
+        if(res.code === 1) message.success(res.msg)
+        if(res.code === 0) message.warning(res.msg)
+        initData();
+    }
+    {/*订单状态：-3 租客已取消 -2 待签合同 -1 待付款 0 生效中 1 已到期 2 退租申请 3 退租申请不通过*/}
+    const getStatusTitle = (status:number) => {
+        switch (status){
+            case -3:
+                return '租客已取消'
+            case -2:
+                return '待签合同'
+            case -1:
+                return '待付款'
+            case 0:
+                return '生效中'
+            case 1:
+                return '已到期'
+            case 2:
+                return '退租申请'
+            case 3:
+                return '退租申请不通过'
+            default:
+
+        }
+    }
+
 
     useEffect(() => {
         initData()
