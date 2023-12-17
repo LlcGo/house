@@ -59,6 +59,7 @@ const UserOrder = () => {
         console.log(id)
         const res = await cancelOrder(id);
         message.success(res.msg)
+        getOrderPage(1,6)
         // alert(id)
         // cancelOrder(id);
     }
@@ -71,6 +72,7 @@ const UserOrder = () => {
         const res = await endOrder(id);
         if(res.code ===1) message.success(res.msg)
         if(res.code ===0) message.warning(res.msg)
+        getOrderPage(1,6)
     }
 
     const getState = (id:any,status:any) => {

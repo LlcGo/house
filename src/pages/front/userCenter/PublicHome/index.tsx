@@ -21,10 +21,11 @@ import style from './PublicHomeIndex.module.less'
 import {Simulate} from "react-dom/test-utils";
 import {house} from "../../../../service/api/userAPI.ts";
 import submit = Simulate.submit;
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import dayjs from "dayjs";
 import {RcFile} from "antd/es/upload";
 import {publishSubmit, uploadFile} from "../../../../service/api/oderAPI.ts";
+import routes from "../../../../router";
 const PublicHome = () => {
 
 
@@ -49,6 +50,7 @@ const PublicHome = () => {
     const [form] = Form.useForm();
     const { token } = theme.useToken();
     const initInput = useRef();
+    const route = useNavigate();
 
     const currentHouse = props?.state
 
@@ -77,10 +79,20 @@ const PublicHome = () => {
 
 
     const onFinish = async (values: any) => {
-        values.id = currentHouse.id;
+        if(currentHouse){
+            values.id = currentHouse.id;
+        }
+        if(!values.buildYear){
+           message.warning('请选填入建成时间');
+            return;
+        }
         values.buildYear = values['buildYear'].format('YYYY-MM-DD')
         console.log('onFinish--->',values)
         // return;
+        if(!key){
+            message.warning('请上传图片')
+            return;
+        }
         const res = await publishSubmit(values,key!);
         setKey(undefined);
         if(res.code === 0){
@@ -88,6 +100,7 @@ const PublicHome = () => {
             return;
         }
         message.success(res.msg)
+        route('/front/userCenter/0')
         // console.log(form)
         // console.log(value)
     }

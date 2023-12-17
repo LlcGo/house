@@ -15,7 +15,7 @@ const UserReducer = (state : User = initialState, action: any) => {
             return {...state ,...payload}
         case "removeUser" :
             initialState.username = '';
-            return 'success'
+            return initialState;
         default:
     }
     // console.log('redux--->',state)

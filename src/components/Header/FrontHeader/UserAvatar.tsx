@@ -1,16 +1,24 @@
 import React from 'react';
 import {DownOutlined, UserOutlined} from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import {Avatar, Dropdown, Image, Space} from 'antd';
+import {Avatar, Dropdown, Image, message, Space} from 'antd';
 import avatar from '/src/assets/img/avatar.jpg'
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {loginOut} from "../../../service/api/userAPI.ts";
 
 
 const FrontUserAvatar = (props: any) => {
 
-    const outLogin = () => {
+    const route = useNavigate();
+    const dispatch =  useDispatch();
+
+    const outLogin = async () => {
+        const res = await loginOut();
+        message.success(res.msg);
         props.setUser('')
+        dispatch({type:'removeUser'})
+        route("/")
     }
 
     const items: MenuProps['items'] = [

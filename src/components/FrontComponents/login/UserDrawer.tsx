@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
-import {Button, Drawer, Form,Input} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Button, Drawer, Form, Input, message} from 'antd';
 import style from './UserDrawerStyle.module.less'
 import {User, UserLogin} from "../../../service/api/userAPI.ts";
 import {useDispatch, useSelector} from "react-redux";
 const UserDrawer = (props:any) => {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const user = useSelector((state:RootState) => state.user);
 
     const onFinish = async (values: User) => {
        const res =  await UserLogin(values)
         console.log('Success ------->', res);
-        if(res){
-            props.setUser(res)
+        if(res.code === 40000){
+            message.warning('账号或密码错误')
+            return;
         }
-        dispatch({
-            type:'addUser',
-            payload:res,
-        })
+        if(res.id){
+            props.setUser(res)
+            dispatch({
+                type:'addUser',
+                payload:res,
+            })
+            message.success('登录成功');
+        }
         // window.localStorage.setItem('user',JSON.stringify(res))
        // alert(username)
     };

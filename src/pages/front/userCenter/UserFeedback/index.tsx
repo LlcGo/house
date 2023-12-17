@@ -82,6 +82,7 @@ const UserFeedback = () => {
     const deleteF = async (id:number) => {
          const res = await deleteFeedback(id);
          message.success(res.msg)
+        initData();
     }
 
     const handleCancel = () => {

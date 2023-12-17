@@ -18,8 +18,10 @@ const FrontHeader = () => {
     const currentUser = useSelector((state:RootState) => state.user);
 
     useEffect(()=>{
+        console.log('user????????????',user)
+        console.log('currentUser????????????',currentUser)
         setUser(currentUser);
-    },[])
+    },[user])
 
     const toIndex = () => {
         route('/')
@@ -62,7 +64,7 @@ const FrontHeader = () => {
 
                     <div className={style.login}>
                         {
-                            user ?    <FrontUserAvatar setUser={setUser} />
+                            currentUser.username !== '' ?    <FrontUserAvatar setUser={setUser} />
                                 : <>
                                     <UserRDrawer/>
                                     <div style={{marginLeft:'20px'}}>

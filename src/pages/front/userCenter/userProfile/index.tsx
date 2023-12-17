@@ -4,6 +4,8 @@ import TextArea from "antd/es/input/TextArea";
 import style from './UseProfileIndex.module.css'
 import {useSelector} from "react-redux";
 import {userSubmit} from "../../../../service/api/userAPI.ts";
+import routes from "../../../../router";
+import {useNavigate} from "react-router-dom";
 
 const UserProfile = () => {
 
@@ -11,6 +13,7 @@ const UserProfile = () => {
     // const user  = JSON.parse(window.localStorage.getItem('user')!)
     const [form] = Form.useForm();
     const user  = useSelector((state :RootState) => {return state?.user});
+    const route = useNavigate();
 
     useEffect(()=>{
         form.setFieldsValue(user)
@@ -18,8 +21,11 @@ const UserProfile = () => {
 
 
     const submit = async (value:any) => {
+        // console.log('submit-------------->',value);
+        // return;
         const res = await userSubmit(value);
         message.success(res.msg);
+        route('/front/userCenter/1')
     }
 
     return(

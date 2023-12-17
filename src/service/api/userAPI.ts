@@ -465,3 +465,14 @@ export async function currentUser(): Promise<User> {
         },
     });
 }
+
+
+
+export async function loginOut(): Promise<result> {
+    return myAxios('/login/logout', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}

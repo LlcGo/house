@@ -142,7 +142,7 @@ export async function paySubmit(orderId:number): Promise<result> {
 }
 
 export async function endOrder(orderId:number): Promise<result> {
-    return myAxios('/order/pay/submit', {
+    return myAxios('/admin/order/end', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

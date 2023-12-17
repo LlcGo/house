@@ -1,7 +1,9 @@
 import {Button, Form, Input, message} from "antd";
 import style from "../userProfile/UseProfileIndex.module.css";
 import React from "react";
-import {userUpdatePassWord} from "../../../../service/api/userAPI.ts";
+import {loginOut, userUpdatePassWord} from "../../../../service/api/userAPI.ts";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 
 
@@ -11,18 +13,29 @@ interface updateUser {
     confPassword?:string
 }
 
-const onFinish = async (values: updateUser) => {
-    const res = await userUpdatePassWord(values.password!,values.newPassword!,values.confPassword!);
-    if(res.code === 1)message.success(res.msg)
-    if(res.code === 0)message.warning(res.msg)
-
-};
 
 // const onFinishFailed = (errorInfo: any) => {
 //     console.log('Failed:', errorInfo);
 // };
 
 const UserupdatePassword = () => {
+
+    const route = useNavigate();
+    const dispatch = useDispatch();
+    const onFinish = async (values: updateUser) => {
+        const res = await userUpdatePassWord(values.password!,values.newPassword!,values.confPassword!);
+        if(res.code === 1){
+            message.success(res.msg + ","+ "请重新登录")
+            await loginOut();
+            route("/");
+            dispatch({type:'removeUser'})
+            return;
+        }
+        if(res.code === 0)message.warning(res.msg)
+    };
+
+
+
     return(
         <div className={style.box} >
 
