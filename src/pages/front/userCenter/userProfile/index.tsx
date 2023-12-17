@@ -32,7 +32,7 @@ const UserProfile = () => {
         <div className={style.box}>
             <div className={style.info}>
                 <div className={style.col}></div>
-                个人信息 {user.username}
+                个人信息
             </div>
 
                 <Form

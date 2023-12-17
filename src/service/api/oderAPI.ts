@@ -153,6 +153,27 @@ export async function endOrder(orderId:number): Promise<result> {
     });
 }
 
+export async function endPass(orderId:number): Promise<result> {
+    return myAxios('/admin/order/endPass', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params:{
+            orderId:orderId
+        }
+    });
+}
 
-
+export async function endReject(orderId:number): Promise<result> {
+    return myAxios('/admin/order/endReject', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params:{
+            orderId:orderId
+        }
+    });
+}
 

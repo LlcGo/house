@@ -4,7 +4,7 @@ import {DeleteOutlined, DownOutlined, EditOutlined, FallOutlined, UpOutlined, Zo
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {toDownHouse, toUpHome} from "../../service/api/userAPI.ts";
-import {message} from "antd";
+import {message, Tag} from "antd";
 import {deleteHouse} from "../../service/api/oderAPI.ts";
 
 const MangerHouseDes = (props: any) => {
@@ -40,11 +40,44 @@ const MangerHouseDes = (props: any) => {
         initData(1,10)
     }
 
+    const getStatusTitle = (status:number) => {
+        switch (status){
+            //状态：0未租出 1已租出 -1已下架 -2待审核 -3审核不通过
+            case -3:
+                return <Tag className={style.tag} color={'red'}>审核不通过</Tag>
+            case -2:
+                return <Tag className={style.tag} color={"blue-inverse"}>待审核</Tag>
+            case -1:
+                return <Tag className={style.tag} color={'red'}>已下架</Tag>
+            case 0:
+                return <Tag className={style.tag} color={'black'}>未租出</Tag>
+            case 1:
+                return <Tag className={style.tag} color={'green'}>已租出</Tag>
+            default:
+
+        }
+    }
+
+    const getButton = (status:number) => {
+        if(status === 1){
+            return null
+        }else if(list.status === -1){
+            return <div   onClick={upHome} className={style.iconBox}>
+                <DownOutlined/>
+            </div>
+        }else {
+            return <div  onClick={downHome} className={style.iconBox}>
+                <UpOutlined/></div>
+        }
+    }
+
+
     return (
         <div className={style.container}>
             <div className={style.bord}>
                 <div>
                     <img className={style.img} src={"http://localhost:8088" + imgUrl}/>
+                    {getStatusTitle(list.status)}
                     <div className={style.title1}>{list.title}</div>
                     <div className={style.title12}>{list.address}</div>
                 </div>
@@ -53,20 +86,18 @@ const MangerHouseDes = (props: any) => {
                     <div onClick={toDetail} className={style.iconBox}>
                         <ZoomInOutlined/>
                     </div>
-                    <div onClick={toEdit} className={style.iconBox}>
-                        <EditOutlined/>
-                    </div>
                     {
-                        list.status === -1 ? <div   onClick={upHome} className={style.iconBox}>
-                            <DownOutlined/>
-                        </div> : <div  onClick={downHome} className={style.iconBox}>
-                            <UpOutlined/>
-                        </div>
+                        list.status !== 1  && <div onClick={toEdit} className={style.iconBox}>
+                        <EditOutlined/>
+                        </div>}
+                      {
+                         getButton(list.status)
+                      }
+                    { list.status !== 1 &&<div onClick={deleteHome} className={style.iconBox}>
+                     <DeleteOutlined/>
+                     </div>
                     }
 
-                    <div onClick={deleteHome} className={style.iconBox}>
-                        <DeleteOutlined/>
-                    </div>
                 </div>
 
             </div>

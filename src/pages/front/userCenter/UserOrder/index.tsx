@@ -4,7 +4,7 @@ import type { ColumnsType } from 'antd/es/table';
 import {getOrders, HouseSearchVO, Order, OrderPage} from "../../../../service/api/userAPI.ts";
 import style from './UseOrderIndex.module.less'
 import UserProcss from '../userProfile/UseProfileIndex.module.css'
-import {cancelOrder, endOrder} from "../../../../service/api/oderAPI.ts";
+import {cancelOrder, endOrder, endPass, endReject} from "../../../../service/api/oderAPI.ts";
 import dayjs from "dayjs";
 
 
@@ -75,20 +75,62 @@ const UserOrder = () => {
         getOrderPage(1,6)
     }
 
+    const pass = async (id:any) => {
+        const res = await endPass(id);
+        if(res.code ===1) message.success(res.msg)
+        if(res.code ===0) message.warning(res.msg)
+        getOrderPage(1,6)
+    }
+
+    const reject = async (id:any) => {
+        const res = await endReject(id);
+        if(res.code ===1) message.success(res.msg)
+        if(res.code ===0) message.warning(res.msg)
+        getOrderPage(1,6)
+    }
+
     const getState = (id:any,status:any) => {
+        // case -3:
+        //             return '租客已取消'
+        //         case -2:
+        //             return '待签合同'
+        //         case -1:
+        //             return '待付款'
+        //         case 0:
+        //             return '生效中'
+        //         case 1:
+        //             return '已到期'
+        //         case 2:
+        //             return '退租申请'
+        //         case 3:
+        //             return '退租申请不通过'
         switch (status){
             case -3:
                 return null
             case -2:
                 return <a>待签合同</a>
             case -1:
-                return  <a onClick={()=>{cancel(id)}}>取消订单</a>
+                return  <div>
+                <div>
+                    <a onClick={()=>{cancel(id)}}>取消订单</a>
+                </div>
+                <div>
+                    <a>去付款</a>
+                </div>
+            </div>
             case 0:
                 return <a onClick={()=>{endO(id)}}>申请退租</a>
             case 1:
                 return null
             case 2:
-                return null
+                return <div>
+                    <div>
+                        <a onClick={()=>{pass(id)}}>退租申请通过</a>
+                    </div>
+                    <div>
+                        <a onClick={()=>{reject(id)}}>退租申请拒绝</a>
+                    </div>
+                </div>
             case 3:
                 return  <a onClick={()=>{cancel(id)}}>退租申请不通过</a>
             default:

@@ -18,7 +18,6 @@ const OrderPay = () => {
     const initData = async (id:number) => {
         const res = await initOrder(orderId)
         console.log(dataNumber)
-
         console.log('initData',res)
         if(res){
             setOrder(res);
