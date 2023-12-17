@@ -13,6 +13,7 @@ import MyMark from "./MyMark";
 import AdminManger from "./AdminManger";
 import PublicHome from "./PublicHome";
 import UserManger from "./UserManger";
+import {useSelector} from "react-redux";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -30,9 +31,7 @@ function getItem(
     } as MenuItem;
 }
 
-const items: MenuItem[] = [
-    getItem('房间管理', '0', <MailOutlined />),
-    getItem('用户管理', '8', <MailOutlined />),
+const userItems: MenuItem[] = [
     getItem('用户中心', '1', <MailOutlined />),
     getItem('订单管理', '2', <CalendarOutlined />),
     getItem('我的家', '3', <MailOutlined />),
@@ -40,6 +39,17 @@ const items: MenuItem[] = [
     getItem('密码修改', '5', <MailOutlined />),
     getItem(' 我的反馈', '6', <CalendarOutlined />),
 ];
+
+const houseUserItems: MenuItem[] = [
+    getItem('房间管理', '0', <MailOutlined />),
+    getItem('用户中心', '1', <MailOutlined />),
+    getItem('订单管理', '2', <CalendarOutlined />),
+    getItem('我的收藏', '4', <CalendarOutlined />),
+    getItem('密码修改', '5', <MailOutlined />),
+    getItem(' 我的反馈', '6', <CalendarOutlined />),
+];
+
+
 
 
 
@@ -49,8 +59,48 @@ const UserCenter = () => {
     const [mode, setMode] = useState<'vertical' | 'inline'>('inline');
     const [theme, setTheme] = useState<MenuTheme>('light');
     const [type,setType] = useState(1);
-
     const params = useParams();
+    const user = useSelector((state:RootState) => state.user);
+    const getData = () :MenuItem[]  => {
+        let arrayObj
+        if(user.role === 'admin'){
+            arrayObj = [getItem('房间管理', '0', <MailOutlined />),
+                getItem('用户管理', '8', <MailOutlined />),
+                getItem('用户中心', '1', <MailOutlined />),
+                getItem('订单管理', '2', <CalendarOutlined />),
+                getItem('我的收藏', '4', <CalendarOutlined />),
+                getItem('密码修改', '5', <MailOutlined />),
+                getItem(' 我的反馈', '6', <CalendarOutlined />)];　
+            //管理员
+            return arrayObj
+        }else if (user.role === 'owner'){
+            //房东
+            arrayObj =[
+                getItem('房间管理', '0', <MailOutlined />),
+                getItem('用户中心', '1', <MailOutlined />),
+                getItem('订单管理', '2', <CalendarOutlined />),
+                getItem('我的收藏', '4', <CalendarOutlined />),
+                getItem('密码修改', '5', <MailOutlined />),
+                getItem(' 我的反馈', '6', <CalendarOutlined />)
+            ]
+            return arrayObj
+        }else {
+            //租客
+            arrayObj = [
+                getItem('用户中心', '1', <MailOutlined />),
+                getItem('订单管理', '2', <CalendarOutlined />),
+                getItem('我的家', '3', <MailOutlined />),
+                getItem('我的收藏', '4', <CalendarOutlined />),
+                getItem('密码修改', '5', <MailOutlined />),
+                getItem(' 我的反馈', '6', <CalendarOutlined />)
+            ]
+            return arrayObj
+        }
+
+    }
+
+    const items: MenuItem[] =  getData()
+
 
     useEffect(()=>{
       setType(Number(params.type))

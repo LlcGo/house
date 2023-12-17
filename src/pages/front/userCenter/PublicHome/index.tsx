@@ -19,13 +19,11 @@ import TextArea from "antd/es/input/TextArea";
 import {PlusOutlined} from "@ant-design/icons";
 import style from './PublicHomeIndex.module.less'
 import {Simulate} from "react-dom/test-utils";
-import {house} from "../../../../service/api/userAPI.ts";
-import submit = Simulate.submit;
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import dayjs from "dayjs";
 import {RcFile} from "antd/es/upload";
 import {publishSubmit, uploadFile} from "../../../../service/api/oderAPI.ts";
-import routes from "../../../../router";
+
 const PublicHome = () => {
 
 
@@ -51,7 +49,7 @@ const PublicHome = () => {
     const { token } = theme.useToken();
     const initInput = useRef();
     const route = useNavigate();
-
+    const [flag,setFlag] = useState(true);
     const currentHouse = props?.state
 
     useEffect(()=>{
@@ -59,6 +57,12 @@ const PublicHome = () => {
             currentHouse.buildYear = dayjs(currentHouse.buildYear)
             form.setFieldsValue(currentHouse)
             console.log('6666---->',currentHouse)
+            currentHouse.thumbnailUrl = currentHouse.thumbnailUrl.replace("/src/main/resources/static","")
+            // setFileList({uid: '1',
+            //     name: 'image.png',
+            //     status: 'done',
+            //     url: currentHouse.thumbnailUrl }as any)
+            //
             return;
         }
         form.setFieldsValue(house);
@@ -89,11 +93,21 @@ const PublicHome = () => {
         values.buildYear = values['buildYear'].format('YYYY-MM-DD')
         console.log('onFinish--->',values)
         // return;
-        if(!key){
-            message.warning('请上传图片')
-            return;
+        if(!currentHouse){
+            if(!key){
+                message.warning('请上传图片')
+                return;
+            }
         }
-        const res = await publishSubmit(values,key!);
+        let timestamp = Date.parse(new Date().toLocaleString());
+
+        let res = null;
+        if(currentHouse){
+             res = await publishSubmit(values,timestamp);
+        }else {
+             res = await publishSubmit(values,key!);
+        }
+
         setKey(undefined);
         if(res.code === 0){
             message.error(res.msg)
@@ -127,6 +141,7 @@ const PublicHome = () => {
             setFileList(newFileList);
         },
         beforeUpload: (file) => {
+            setFlag(false)
             setFileList([...fileList, file]);
             return false;
         },
@@ -308,22 +323,45 @@ const PublicHome = () => {
 
 
                 <div>
-                    <div style={{marginTop:'6px', marginLeft:'15%'}}>
-                        <div  className={style.title2}>
-                            上传图片
+                    {
+                        currentHouse ? <div style={{marginTop:'6px', marginLeft:'15%'}}>
+                            <div  className={style.title2}>
+                                上传图片
+                            </div>
+                                {
+                                    flag && <img alt="example" style={{ width: '20%' }} src={'http://localhost:8088' + currentHouse.thumbnailUrl} />
+                                }
+                            <Form.Item name={'thumbnail_url'} className={style.upload}  valuePropName="fileList" getValueFromEvent={normFile}>
+                                <Upload  {...uploadProps} listType="picture-card">
+                                    <div>
+                                        <PlusOutlined />
+                                        <div style={{ marginTop: 8 }}>房间图片</div>
+                                    </div>
+                                </Upload>
+                            </Form.Item>
+                            <div>
+                                <Button type={"primary"} onClick={handleUpload}>上传</Button>
+                            </div>
+                        </div> :
+
+                            <div style={{marginTop:'6px', marginLeft:'15%'}}>
+                            <div  className={style.title2}>
+                                上传图片
+                            </div>
+                            <Form.Item name={'thumbnail_url'} className={style.upload}  valuePropName="fileList" getValueFromEvent={normFile}>
+                                <Upload {...uploadProps} listType="picture-card">
+                                    <div>
+                                        <PlusOutlined />
+                                        <div style={{ marginTop: 8 }}>房间图片</div>
+                                    </div>
+                                </Upload>
+                            </Form.Item>
+                            <div>
+                                <Button type={"primary"} onClick={handleUpload}>上传</Button>
+                            </div>
                         </div>
-                        <Form.Item name={'thumbnail_url'} className={style.upload}  valuePropName="fileList" getValueFromEvent={normFile}>
-                            <Upload {...uploadProps} listType="picture-card">
-                                <div>
-                                    <PlusOutlined />
-                                    <div style={{ marginTop: 8 }}>房间图片</div>
-                                </div>
-                            </Upload>
-                        </Form.Item>
-                        <div>
-                            <Button type={"primary"} onClick={handleUpload}>上传</Button>
-                        </div>
-                    </div>
+                    }
+
                 </div>
 
 

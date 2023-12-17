@@ -5,7 +5,7 @@ import {getOrders, HouseSearchVO, Order, OrderPage} from "../../../../service/ap
 import style from './UseOrderIndex.module.less'
 import UserProcss from '../userProfile/UseProfileIndex.module.css'
 import {cancelOrder, endOrder} from "../../../../service/api/oderAPI.ts";
-
+import dayjs from "dayjs";
 
 
 {/*订单状态：-3 租客已取消 -2 待签合同 -1 待付款 0 生效中 1 已到期 2 退租申请 3 退租申请不通过*/}
@@ -102,7 +102,7 @@ const UserOrder = () => {
             title: '订单列表',
             dataIndex: 'house',
             key: 'house',
-            render: (_, { status,totalAmount, house }) => (
+            render: (_, { status,totalAmount, house,startDate,endDate }) => (
                 <div className={style.imgBox}>
                     <div className={style.columnsImgLeft}>
                         <img style={{width:'150px',height:'110px'}} src={"http://localhost:8088" + house?.thumbnailUrl.replace("/src/main/resources/static","")}/>
@@ -110,7 +110,7 @@ const UserOrder = () => {
                     <div className={style.columnsImgRight}>
                         <div>{house?.title}</div>
                         <div>地区：{house?.address}</div>
-                        <div>{house?.lastOrderStartTime}-{house?.lastOrderEndTime}</div>
+                        <div>{getDate(startDate!)}-{getDate(endDate!)}</div>
                         <div>总金额：{totalAmount}</div>
                         <div>{getStatusTitle(status!)}</div>
                     </div>
@@ -166,6 +166,11 @@ const UserOrder = () => {
         // },
     ];
 
+
+    const getDate =(time:number) => {
+        console.log()
+        return (dayjs(time).format('YYYY/MM/DD'))
+    }
 
     return (
         <>
