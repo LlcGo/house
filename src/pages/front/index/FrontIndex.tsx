@@ -72,12 +72,12 @@ const FrontIndex = () =>{
             {/*最新整租*/}
             {/*<div>{JSON.stringify(topList[0])}</div>*/}
             <div className={style.container}>
-                <Descriptions list={topList[0]}/>
-                <Descriptions list={topList[1]}/>
-                <Descriptions list={topList[2]}/>
-                <Descriptions list={topList[3]}/>
-                <Descriptions list={topList[4]}/>
-                <Descriptions list={topList[5]}/>
+                <Descriptions getModel={getModel} list={topList[0]}/>
+                <Descriptions getModel={getModel} list={topList[1]}/>
+                <Descriptions getModel={getModel} list={topList[2]}/>
+                <Descriptions getModel={getModel} list={topList[3]}/>
+                <Descriptions getModel={getModel} list={topList[4]}/>
+                <Descriptions getModel={getModel} list={topList[5]}/>
                <div className={style.bottomButton}>
                      <Button onClick={goWhole} type={"primary"} className={style.button}> 查看更多</Button>
                </div>
@@ -93,12 +93,12 @@ const FrontIndex = () =>{
                 {/*最新整租*/}
                 {/*<div>{JSON.stringify(topList[0])}</div>*/}
                 <div className={style.container}>
-                    <Descriptions list={list[0]}/>
-                    <Descriptions list={list[1]}/>
-                    <Descriptions list={list[2]}/>
-                    <Descriptions list={list[3]}/>
-                    <Descriptions list={list[4]}/>
-                    <Descriptions list={list[5]}/>
+                    <Descriptions getModel={getModel} list={list[0]}/>
+                    <Descriptions getModel={getModel} list={list[1]}/>
+                    <Descriptions getModel={getModel} list={list[2]}/>
+                    <Descriptions getModel={getModel} list={list[3]}/>
+                    <Descriptions getModel={getModel} list={list[4]}/>
+                    <Descriptions getModel={getModel} list={list[5]}/>
 
                     <div className={style.bottomButton}>
                         <Button onClick={goShare} type={"primary"} className={style.button}>查看更多</Button>

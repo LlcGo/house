@@ -93,21 +93,37 @@ const PublicHome = () => {
         values.buildYear = values['buildYear'].format('YYYY-MM-DD')
         console.log('onFinish--->',values)
         // return;
+        //添加租房 对没有上传图像的判断
         if(!currentHouse){
             if(!key){
                 message.warning('请上传图片')
                 return;
             }
         }
+        //这个应该是之前的key
         let timestamp = Date.parse(new Date().toLocaleString());
-
+        // alert('key' + key)
         let res = null;
         if(currentHouse){
-             res = await publishSubmit(values,timestamp);
+            //如果是编辑那就可能有俩种情况，
+            // 一种是不修改图片直接上传给一个随机timestamp就行
+            if(!key){
+                // alert('修改不改图');
+                // return;
+                res = await publishSubmit(values,timestamp);
+            }else {
+                //一种是修改后要将原来图片全部覆盖，用一个新的key
+                // alert('修改改图')
+                // return;
+                res = await publishSubmit(values,key!);
+
+            }
         }else {
+            // alert('新增');
+            // return
              res = await publishSubmit(values,key!);
         }
-
+// return;
         setKey(undefined);
         if(res.code === 0){
             message.error(res.msg)
@@ -126,11 +142,13 @@ const PublicHome = () => {
         });
         setUploading(true);
         let timestamp = Date.parse(new Date().toLocaleString());
-        setKey(timestamp);
         console.log(timestamp)
         // return;
         const res = await uploadFile(timestamp,formData);
-        message.success(res.msg)
+        let res0 = res.msg?.split(',');
+        message.success(res0![0]);
+        // alert(Number(res0![1]))
+        setKey(Number(res0![1]));
     };
 
     const uploadProps: UploadProps = {
@@ -326,7 +344,7 @@ const PublicHome = () => {
                     {
                         currentHouse ? <div style={{marginTop:'6px', marginLeft:'15%'}}>
                             <div  className={style.title2}>
-                                上传图片
+                                上传图片（若上传图片，请务必点击上传）
                             </div>
                                 {
                                     flag && <img alt="example" style={{ width: '20%' }} src={'http://localhost:8088' + currentHouse.thumbnailUrl} />
@@ -368,11 +386,21 @@ const PublicHome = () => {
                 <div style={{position:'relative'}}>
                     <div style={{position:'absolute',left:'40%'}}>
                         <Form.Item>
-                            <Space>
-                                <Button type="primary" htmlType="submit">
-                                    提交
+                            {/*{*/}
+                            {/*    key! > 0 ?*/}
+                            {/*    <Space>*/}
+                            {/*        <Button disabled type="primary" htmlType="submit">*/}
+                            {/*            提交*/}
+                            {/*        </Button>*/}
+                            {/*    </Space>*/}
+                            {/*    :*/}
+                                <Space>
+                                <Button  type="primary" htmlType="submit">
+                                提交
                                 </Button>
-                            </Space>
+                                </Space>
+                            {/*}*/}
+
                         </Form.Item>
                     </div>
                 </div>

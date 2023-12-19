@@ -1,9 +1,17 @@
 import style from "../../pages/front/userCenter/AdminManger/AdminMangerIndex.module.css";
 import img from "../../assets/img/fimg.jpg";
-import {DeleteOutlined, DownOutlined, EditOutlined, FallOutlined, UpOutlined, ZoomInOutlined} from "@ant-design/icons";
+import {
+    CheckOutlined,
+    DeleteOutlined,
+    DownOutlined,
+    EditOutlined,
+    FallOutlined,
+    UpOutlined,
+    ZoomInOutlined
+} from "@ant-design/icons";
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {toDownHouse, toUpHome} from "../../service/api/userAPI.ts";
+import {checkPassHouse, toDownHouse, toUpHome} from "../../service/api/userAPI.ts";
 import {message, Tag} from "antd";
 import {deleteHouse} from "../../service/api/oderAPI.ts";
 
@@ -38,6 +46,13 @@ const MangerHouseDes = (props: any) => {
         const res = await deleteHouse(list.id);
         message.success(res.msg);
         initData(1,10)
+    }
+
+
+    const passCheck = async () => {
+        const res = await checkPassHouse(list.id);
+        message.success(res.msg);
+        initData(1,10);
     }
 
     const getStatusTitle = (status:number) => {
@@ -93,6 +108,12 @@ const MangerHouseDes = (props: any) => {
                       {
                          getButton(list.status)
                       }
+                    {
+                       list.status == -2 &&  <div onClick={passCheck} className={style.iconBox}>
+                            <CheckOutlined />
+                        </div>
+                    }
+
                     { list.status !== 1 &&<div onClick={deleteHome} className={style.iconBox}>
                      <DeleteOutlined/>
                      </div>

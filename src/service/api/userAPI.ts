@@ -476,3 +476,17 @@ export async function loginOut(): Promise<result> {
         },
     });
 }
+
+
+export async function checkPassHouse(id:number): Promise<result> {
+    return myAxios('/admin/checkPass', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params:{
+            id:id
+        }
+    });
+}
+

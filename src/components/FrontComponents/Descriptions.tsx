@@ -5,12 +5,13 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import {house} from "../../service/api/userAPI.ts";
 import {Mark} from "../../service/api/oderAPI.ts";
+import {SmileOutlined} from "@ant-design/icons";
 
 
 const Descriptions = (props:any) => {
     const route = useNavigate();
     // debugger
-    let{list} = props
+    let{list,getModel} = props
 
     const toDetail =() => {
         route('/front/house/'+list.id)
@@ -24,6 +25,7 @@ const Descriptions = (props:any) => {
           //     content: '收藏成功',
           // });
           message.success('收藏成功');
+          getModel();
       }else {
           message.warning('您已收藏过');
       }
@@ -51,7 +53,10 @@ const Descriptions = (props:any) => {
                             <p>{list?.bedroomNum}卧室</p>
                             <p style={{marginLeft:'6px'}}>{list?.livingRoomNum}卫生间</p>
                         </div>
-                        <Button type="dashed" onClick={mark} className={style.infoBottomButton}>收藏</Button>
+                        {/*{list.hasElevator === 1 ?*/}
+                        {/*    <Button type="dashed" onClick={mark} className={style.infoBottomButton}><SmileOutlined />已收藏</Button>:*/}
+                            <Button type="dashed" onClick={mark} className={style.infoBottomButton}>收藏</Button>
+                        {/*}*/}
                     </div>
 
                 </div>

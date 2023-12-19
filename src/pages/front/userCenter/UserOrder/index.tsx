@@ -4,8 +4,9 @@ import type { ColumnsType } from 'antd/es/table';
 import {getOrders, HouseSearchVO, Order, OrderPage} from "../../../../service/api/userAPI.ts";
 import style from './UseOrderIndex.module.less'
 import UserProcss from '../userProfile/UseProfileIndex.module.css'
-import {cancelOrder, endOrder, endPass, endReject} from "../../../../service/api/oderAPI.ts";
+import {cancelOrder, endOrder, endPass, endReject, initOrder} from "../../../../service/api/oderAPI.ts";
 import dayjs from "dayjs";
+import {useNavigate} from "react-router-dom";
 
 
 {/*订单状态：-3 租客已取消 -2 待签合同 -1 待付款 0 生效中 1 已到期 2 退租申请 3 退租申请不通过*/}
@@ -38,6 +39,7 @@ const UserOrder = () => {
 
     const [order,setOrder] = useState<OrderPage>()
     const [page,setPage] = useState<number>();
+    const route = useNavigate();
 
     useEffect(() => {
         getOrderPage(1,6)
@@ -89,7 +91,27 @@ const UserOrder = () => {
         getOrderPage(1,6)
     }
 
-    const getState = (id:any,status:any) => {
+    const topay = async (orderId:number,endDate:number,startDate:number) => {
+        const res = await initOrder(orderId)
+        if(!res){
+            message.success('这不是您的订单')
+            return;
+        }
+        let stime = Date.parse(new Date(startDate).toLocaleString());
+        let etime = Date.parse(new Date(endDate).toLocaleString());
+        let usedTime = etime - stime;  //两个时间戳相差的毫秒数
+        console.log('时间---->',stime,etime)
+        let days=Math.floor(usedTime/(24*3600*1000));
+        console.log('相差时间---->',days)
+
+        let data = {
+            orderId:orderId,
+            dataNumber: days
+        }
+        route('/order/pay',{state:data})
+    }
+
+    const getState = (id:any,status:any,endDate:number,startDate:number) => {
         // case -3:
         //             return '租客已取消'
         //         case -2:
@@ -115,7 +137,7 @@ const UserOrder = () => {
                     <a onClick={()=>{cancel(id)}}>取消订单</a>
                 </div>
                 <div>
-                    <a>去付款</a>
+                    <a onClick={()=>{topay(id,endDate,startDate)}}>去付款</a>
                 </div>
             </div>
             case 0:
@@ -194,7 +216,7 @@ const UserOrder = () => {
             key: 'houseId',
             // dataIndex: 'houseId',
             align:'center',
-            render: (_,{id,status}) => getState(id,status)
+            render: (_,{id,status,endDate,startDate}) => getState(id,status,endDate,startDate)
         },
         // {
         //     title: 'Action',

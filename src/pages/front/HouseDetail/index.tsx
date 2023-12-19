@@ -9,6 +9,7 @@ import { DatePicker, Space } from 'antd';
 import routes from "../../../router";
 import {Mark, orderCreate} from "../../../service/api/oderAPI.ts";
 import userDrawer from "../../../components/FrontComponents/login/UserDrawer.tsx";
+import {SmileOutlined} from "@ant-design/icons";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -189,6 +190,7 @@ const HouseDetail = () => {
             //     content: '收藏成功',
             // });
             message.success('收藏成功');
+            initData();
         }else {
             message.warning('您已收藏过');
         }
@@ -242,9 +244,14 @@ const HouseDetail = () => {
                 <div className={style.right}>
                     <div>
                         <Card>
-                            <Button onClick={mark} type="primary" style={{minWidth:'200px',minHeight:'50px'}} >
-                                收藏
-                            </Button>
+                            {
+                                // house?.hasElevator === 1 ?  <Button onClick={mark} type="primary" style={{minWidth:'200px',minHeight:'50px'}} >
+                                //         <SmileOutlined style={{marginRight:'20px'}} /> 已收藏
+                                // </Button> :
+                                    <Button onClick={mark} type="primary" style={{minWidth:'200px',minHeight:'50px'}} >
+                                        收藏
+                                    </Button>
+                            }
                         </Card>
                     </div>
                     <div>
